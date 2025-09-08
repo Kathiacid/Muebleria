@@ -1,4 +1,4 @@
-export default function DetalleProducto() {
+export default function Home() {
 return (
 <div>
     <h1>Bienvenido a la Mueblería</h1>
