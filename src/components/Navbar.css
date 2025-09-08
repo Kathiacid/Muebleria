@@ -1,3 +1,108 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+
+}
+
+
 .navbanner{
+    font-family: Arial, Helvetica, sans-serif;
     display: flex;
+    gap: 30px;
+    justify-content: center;
+    background-color: #34b1b1;
+    height: 37px;
+}
+
+.navbanner a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    padding: 0.5rem 0;
+
+
+}
+
+.navbanner a:hover {
+    color: #3498db;
+}
+
+/* Item de catálogo */
+.catalog-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.catalog-trigger {
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    cursor: pointer;
+}
+
+.catalog-trigger:hover {
+    color: #3498db;
+}
+
+/* Menú desplegable */
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    min-width: 200px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 0.5rem 0;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-in-out;
+}
+
+.dropdown-menu a {
+    color: #333 !important;
+    padding: 0.75rem 1.5rem;
+    display: block;
+    text-decoration: none;
+    font-weight: 400;
+    transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f8f9fa;
+    color: #007bff !important;
+}
+
+/* Animación */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbanner form {
+    display: flex;
+}
+
+.navbanner input {
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    min-width: 200px;
+}
+.lista{
+    display: flex;
+    gap: 30px;
+    margin-top: 10px;
+    list-style: none;
+}
+.buscador{
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
