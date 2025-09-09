@@ -1,3 +1,3 @@
 export default function Cocina() {
-return <h1>Página de Baño</h1>
+return <h1>PSginsa Vovivs</h1>
 }
