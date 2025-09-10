@@ -1,43 +1,101 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-
+* {
+padding: 0;
+margin: 0;
+box-sizing: border-box;
+font-family: Arial, Helvetica, sans-serif;
 }
 
-.banner{
-    width: 100%;
+.banner {
+width: 100%;
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
+/* Grid principal */
 .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    gap: 20px;
-    width: 100%;
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-template-rows: auto auto;
+gap: 20px;
+width: 100%;
+padding: 40px;
 }
-.texto1,.texto2,.img1,.img2{
-    width: 100%;
-    justify-content: center;
-    padding: 40px;
-    align-items: center;
-    display: flex;
-}
-.texto1,.texto2{
-    flex-direction: column;
-    text-align: center;
-}
-.imagen1,.imagen2{
-    width: 600px;        
+
+/* Bloques */
+.texto1,
+.texto2,
+.img1,
+.img2 {
+width: 100%;
+justify-content: center;
+padding: 40px;
+align-items: center;
+display: flex;
+background: #fff;
+border-radius: 12px;
 
 }
-p{
-    margin-top: 15px;
+
+.texto1:hover,
+.texto2:hover,
+.img1:hover,
+.img2:hover {
+transform: translateY(-5px);
+
 }
-a{
-    padding: 15px;
-    border: 2px solid #34b1b1;
-    margin-top: 20px;
-    color:#34b1b1;
-    text-decoration: none;
+
+.texto1,
+.texto2 {
+flex-direction: column;
+text-align: center;
+}
+
+/* Imágenes */
+.imagen1,
+.imagen2 {
+width: 600px;
+border-radius: 10px;
+transition: transform 0.4s ease, filter 0.4s ease;
+cursor: pointer;
+}
+
+.imagen1:hover,
+.imagen2:hover {
+transform: scale(1.05);
+filter: brightness(1.1);
+}
+
+/* Texto */
+h2 {
+font-size: 2rem;
+color: #222;
+}
+
+p {
+margin-top: 15px;
+color: #555;
+line-height: 1.5;
+font-size: 1rem;
+}
+
+/* Botones */
+.mi-boton {
+padding: 12px 20px;
+border: 2px solid #34b1b1;
+margin-top: 20px;
+color: #34b1b1;
+text-decoration: none;
+border-radius: 8px;
+font-weight: bold;
+transition: all 0.3s ease;
+}
+
+.mi-boton:hover {
+background: #34b1b1;
+color: #fff;
+transform: scale(1.05);
+box-shadow: 0 4px 12px rgba(52, 177, 177, 0.3);
+}
+.title{
+    text-align: center;
+    margin: 20px;
 }
