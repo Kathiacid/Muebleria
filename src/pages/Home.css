@@ -12,6 +12,7 @@ box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
 /* Grid principal */
 .grid {
+background-color: white;
 display: grid;
 grid-template-columns: 1fr 1fr;
 grid-template-rows: auto auto;
@@ -65,10 +66,7 @@ filter: brightness(1.1);
 }
 
 /* Texto */
-h2 {
-font-size: 2rem;
-color: #222;
-}
+
 
 p {
 margin-top: 15px;
@@ -99,3 +97,4 @@ box-shadow: 0 4px 12px rgba(52, 177, 177, 0.3);
     text-align: center;
     margin: 20px;
 }
+

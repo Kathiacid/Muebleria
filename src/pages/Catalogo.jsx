@@ -1,8 +1,9 @@
 export default function Catalogo() {
 return (
-<div>
-    <h1>Catálogo</h1>
-    <p>Aquí se mostrarán los productos.</p>
-</div>
+<main style={{ padding: "40px", minHeight: "60vh" }}>
+    <h1>Catálogo de Productos</h1>
+    <p>Explora nuestra selección de muebles y accesorios para el hogar.</p>
+    {/* Aquí puedes poner un grid de productos */}
+</main>
 )
 }

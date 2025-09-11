@@ -1,6 +1,4 @@
 
-
-
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -27,17 +25,20 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: white;
+  color: #213547; /* Añadido para consistencia */
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  color: #213547; /* Añadido para modo claro */
 }
 
+/* Estilos de botones base - menos específicos para evitar conflictos */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -46,6 +47,7 @@ button {
   font-weight: 500;
   font-family: inherit;
   background-color: #1a1a1a;
+  color: white;
   cursor: pointer;
   transition: border-color 0.25s;
 }
@@ -67,8 +69,32 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+    color: #213547; /* Añadido para modo claro */
   }
 }
-footer{
-  background-color: #747bff;
+
+footer {
+  background: #1f2937;
+  color: white;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  gap:100px;
+  justify-content: space-between;
+
+}
+
+.footer hr {
+  margin: 15px 0;
+  border: 1px solid #34b1b1;
+}
+h2{
+  color: #34b1b1;
+  margin:20px
+}
+.item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

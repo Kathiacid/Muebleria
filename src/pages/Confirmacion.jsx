@@ -1,8 +1,8 @@
 export default function Confirmacion() {
-return (
-<div>
-    <h1>Bienvenido a la Mueblería</h1>
-    <p>Explora nuestro catálogo y solicita tu mueble personalizado.</p>
-</div>
-)
+  return (
+    <main style={{ padding: "40px", minHeight: "60vh" }}>
+      <h1>¡Compra confirmada! 🎉</h1>
+      <p>Gracias por tu pedido, recibirás un correo con los detalles.</p>
+    </main>
+  )
 }
