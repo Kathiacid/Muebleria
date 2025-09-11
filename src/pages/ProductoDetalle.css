@@ -1,0 +1,95 @@
+/* src/ProductoDetalle.css */
+
+.producto-detalle-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.btn-volver {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.btn-volver:hover {
+    background-color: #e0e0e0;
+}
+
+.producto-detalle-content {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+@media (min-width: 768px) {
+    .producto-detalle-content {
+        flex-direction: row;
+    }
+}
+
+.producto-detalle-imagen {
+    flex: 1;
+    text-align: center;
+}
+
+.producto-detalle-imagen img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.producto-detalle-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.producto-detalle-info h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #213547;
+}
+
+.producto-precio-detalle {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #34b1b1;
+    margin-bottom: 20px;
+}
+
+.producto-descripcion {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.producto-categoria-detalle span,
+.producto-subcategoria-detalle span {
+    font-weight: bold;
+    color: #213547;
+}
+
+.btn-agregar-detalle {
+    background-color: #34b1b1;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    font-size: 1.1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-agregar-detalle:hover {
+    background-color: #2b9e9e;
+}

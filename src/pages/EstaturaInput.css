@@ -1,0 +1,68 @@
+/* src/pages/estaturaInput.css */
+
+.container-estatura {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8f8f8;
+    color: #333;
+}
+
+.card-estatura {
+    background-color: #ffffff;
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    max-width: 450px;
+    width: 100%;
+}
+
+.card-estatura h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #444;
+}
+
+.card-estatura p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #666;
+}
+
+.card-estatura input[type="number"] {
+    padding: 0.75rem;
+    font-size: 1rem;
+    width: 100%;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.card-estatura input[type="number"]:focus {
+    border-color: #a45a52;
+    outline: none;
+    box-shadow: 0 0 5px rgba(164, 90, 82, 0.5);
+}
+
+.card-estatura button {
+    padding: 0.75rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #a45a52;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.card-estatura button:hover {
+    background-color: #8c4b44;
+    transform: translateY(-2px);
+}

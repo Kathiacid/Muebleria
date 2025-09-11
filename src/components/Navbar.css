@@ -1,49 +1,49 @@
-*{
+/* src/components/Navbar.css */
+
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-
 }
 
-
-.navbanner{
+.navbanner {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
-    gap: 30px;
-    justify-content: center;
-    background-color: #34b1b1;
-    height: 37px;
+    justify-content: space-between; /* Espacia los elementos a los lados */
+    align-items: center; /* Centra los elementos verticalmente */
+    background-color: #a45a52; /* Color de ejemplo más cálido */
+    padding: 0 2rem; /* Espaciado horizontal */
+    height: 60px; /* Una altura más estándar */
 }
 
-.navbanner a {
+.lista {
+    display: flex;
+    list-style: none;
+    gap: 2rem; /* Espacio entre los elementos de la lista */
+    margin: 0; /* Asegura que no haya márgenes no deseados */
+}
+
+.navbanner a,
+.catalog-trigger {
     color: white;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
     padding: 0.5rem 0;
-
-
 }
 
-.navbanner a:hover {
-    color: #3498db;
+.navbanner a:hover,
+.catalog-trigger:hover {
+    color: #ffe0b2; /* Un color de hover más claro */
 }
 
 /* Item de catálogo */
 .catalog-item {
     position: relative;
     cursor: pointer;
-}
-
-.catalog-trigger {
-    color: white;
-    font-weight: 500;
-    padding: 0.5rem 0;
-    cursor: pointer;
-}
-
-.catalog-trigger:hover {
-    color: #3498db;
+    height: 100%; /* Permite que el hover ocupe todo el espacio vertical */
+    display: flex;
+    align-items: center;
 }
 
 /* Menú desplegable */
@@ -58,20 +58,23 @@
     padding: 0.5rem 0;
     z-index: 1000;
     animation: fadeIn 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
 }
 
-.dropdown-menu a {
-    color: #333 !important;
+.dropdown-menu span { /* Cambiado de a a span para el nuevo enfoque de navegación */
+    color: #333;
     padding: 0.75rem 1.5rem;
     display: block;
     text-decoration: none;
     font-weight: 400;
+    cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
-.dropdown-menu a:hover {
-    background-color: #f8f9fa;
-    color: #007bff !important;
+.dropdown-menu span:hover {
+    background-color: #f0f0f0;
+    color: #a45a52;
 }
 
 /* Animación */
@@ -86,23 +89,14 @@
     }
 }
 
-.navbanner form {
+.buscador {
     display: flex;
+    align-items: center;
 }
 
-.navbanner input {
+.buscador input {
     padding: 0.5rem;
     border-radius: 5px;
     border: 1px solid #ccc;
     min-width: 200px;
-}
-.lista{
-    display: flex;
-    gap: 30px;
-    margin-top: 10px;
-    list-style: none;
-}
-.buscador{
-    margin-top: 10px;
-    margin-bottom: 10px;
 }

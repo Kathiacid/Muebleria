@@ -1,8 +1,12 @@
+// src/components/Navbar.jsx
+
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useState, useContext } from "react"
+import { EstaturaContext } from './EstaturaContext';
 import "./Navbar.css" 
 
 export default function Navbar() {
+    const { estatura } = useContext(EstaturaContext);
     const [busqueda, setBusqueda] = useState("")
     const [isCatalogOpen, setIsCatalogOpen] = useState(false)
     const navigate = useNavigate()
@@ -10,8 +14,26 @@ export default function Navbar() {
     const manejarSubmit = (e) => {
         e.preventDefault()
         if (busqueda.trim() !== "") {
-            navigate(`/catalogo?search=${busqueda}`)
+            if (!estatura) {
+                navigate("/estatura");
+            } else {
+                navigate(`/catalogo-completo?search=${busqueda}`);
+            }
             setBusqueda("")
+        }
+    }
+
+    const navegarACatalogo = (categoria) => {
+        setIsCatalogOpen(false);
+        // Si no hay estatura, redirige a la nueva página de estatura
+        if (!estatura) {
+            navigate("/estatura");
+            return;
+        }
+        if (categoria === "todos") {
+            navigate("/catalogo-completo");
+        } else {
+            navigate(`/catalogo-completo?categoria=${categoria}`);
         }
     }
 
@@ -26,16 +48,17 @@ export default function Navbar() {
                         onMouseEnter={() => setIsCatalogOpen(true)}
                         onMouseLeave={() => setIsCatalogOpen(false)}
                     >
-                        <span className="catalog-trigger">Catálogo</span>
+                        <span className="catalog-trigger" onClick={() => navegarACatalogo("todos")}>
+                            Catálogo
+                        </span>
                         
                         {isCatalogOpen && (
                         <div className="dropdown-menu">
-
-                            <Link to="/catalogo/banio">Baño</Link>
-                            <Link to="/catalogo/cocina">Cocina</Link>
-                            <Link to="/catalogo/habitacion">Habitación</Link>
-                            <Link to="/catalogo/livingcomedor">Living Comedor</Link> 
-                            <Link to="/catalogo/taller">Taller</Link>
+                            <span onClick={() => navegarACatalogo("baño")}>Baño</span>
+                            <span onClick={() => navegarACatalogo("cocina")}>Cocina</span>
+                            <span onClick={() => navegarACatalogo("habitacion")}>Habitación</span>
+                            <span onClick={() => navegarACatalogo("livingcomedor")}>Living & Comedor</span> 
+                            <span onClick={() => navegarACatalogo("taller")}>Taller</span>
                         </div>
                         )}
                     </li>
