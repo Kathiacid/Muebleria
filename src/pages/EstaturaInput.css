@@ -44,9 +44,9 @@
 }
 
 .card-estatura input[type="number"]:focus {
-    border-color: #a45a52;
+    border-color: #34B1B1;
     outline: none;
-    box-shadow: 0 0 5px rgba(164, 90, 82, 0.5);
+    box-shadow: 0 0 5px #2b7777;
 }
 
 .card-estatura button {
@@ -54,7 +54,7 @@
     font-size: 1rem;
     font-weight: bold;
     color: #fff;
-    background-color: #a45a52;
+    background-color: #34B1B1;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -63,6 +63,6 @@
 }
 
 .card-estatura button:hover {
-    background-color: #8c4b44;
+    background-color: #8cd4d4;
     transform: translateY(-2px);
 }

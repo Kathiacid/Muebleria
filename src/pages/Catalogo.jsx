@@ -104,7 +104,6 @@ const Catalogo = () => {
     
     return (
         <div className="catalogo-container">
-            <h1>Catálogo de Muebles de Madera</h1>
             <p>Mostrando productos ajustados para tu estatura de <strong className="estatura-resaltada">{estatura}m</strong></p>
             
             <div className="catalogo-content">
@@ -170,7 +169,7 @@ const Catalogo = () => {
                                             <Link to={`/producto/${producto.id}`}>{producto.nombre}</Link>
                                         </h3>
                                         <p className="producto-precio">${calcularPrecio(producto, estatura).toFixed(0)}</p>
-                                        <button className="btn-agregar">Agregar al carrito</button>
+                                        <button className="btn-agregar">Lo Quiero</button>
                                     </div>
                                 </div>
                             ))

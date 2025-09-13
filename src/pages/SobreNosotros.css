@@ -52,21 +52,22 @@ transition: background-color 0.3s, transform 0.2s;
 
 .btn-enlace:first-child {
 color: #fff;
-background-color: #a45a52;
+background-color: #34B0B0;
 }
 
 .btn-enlace:first-child:hover {
-background-color: #8c4b44;
+background-color: #34B0B0;
 transform: translateY(-2px);
 }
 
 .btn-enlace:last-child {
-color: #a45a52;
+color: #34B0B0;
 background-color: transparent;
-border: 2px solid #a45a52;
+border: 2px solid #34B0B0
 }
 
 .btn-enlace:last-child:hover {
-background-color: #f0e6e6;
+background-color: #8cd4d4;
 transform: translateY(-2px);
+color: white;
 }

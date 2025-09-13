@@ -1,12 +1,3 @@
-#root {
-  max-width: 100%;       /* ocupa todo el ancho */
-  margin: 0;             /* quita el centrado automático */
-  padding: 0;            /* quita padding innecesario */
-  text-align: left;      /* alinea el texto a la izquierda */
-  background-color: #F9F9F9;
-  min-height: 100vh;     /* asegura que cubra toda la altura */
-}
-
 
 .logo {
   height: 6em;

@@ -7,11 +7,10 @@
 }
 
 .navbanner {
-    font-family: Arial, Helvetica, sans-serif;
     display: flex;
     justify-content: space-between; /* Espacia los elementos a los lados */
     align-items: center; /* Centra los elementos verticalmente */
-    background-color: #a45a52; /* Color de ejemplo más cálido */
+    background-color: #34b1b1; /* Color de ejemplo más cálido */
     padding: 0 2rem; /* Espaciado horizontal */
     height: 60px; /* Una altura más estándar */
 }
@@ -34,15 +33,14 @@
 
 .navbanner a:hover,
 .catalog-trigger:hover {
-    color: #ffe0b2; /* Un color de hover más claro */
+    color: #000000; /* Un color de hover más claro */
 }
 
 /* Item de catálogo */
 .catalog-item {
     position: relative;
     cursor: pointer;
-    height: 100%; /* Permite que el hover ocupe todo el espacio vertical */
-    display: flex;
+    height: 100%; 
     align-items: center;
 }
 
@@ -74,7 +72,7 @@
 
 .dropdown-menu span:hover {
     background-color: #f0f0f0;
-    color: #a45a52;
+    color: #34b1b1;
 }
 
 /* Animación */
