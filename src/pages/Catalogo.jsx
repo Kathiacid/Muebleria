@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { EstaturaContext } from '../components/EstaturaContext';
-import axios from "axios";
+import { getProductos, getCategorias, getPrecioAjustado } from "../api";
 import './catalogo.css';
 
 const Catalogo = () => {
@@ -18,84 +18,67 @@ const Catalogo = () => {
     }, [estatura, navigate]);
 
     const [categoriaActiva, setCategoriaActiva] = useState(categoriaURL || 'todos');
-    const [filtrosSubcategorias, setFiltrosSubcategorias] = useState([]);
-
-    useEffect(() => {
-        setCategoriaActiva(categoriaURL || 'todos');
-        setFiltrosSubcategorias([]);
-    }, [categoriaURL]);
-
-    // Estado de productos vacío
     const [productos, setProductos] = useState([]);
+    const [categorias, setCategorias] = useState([]);
 
-    // Traer productos desde API Django
+    // 🔹 Traer productos
     useEffect(() => {
-        axios.get("http://127.0.0.1:8000/api/productos/") 
-            .then(response => {
-                setProductos(response.data);
-            })
-            .catch(error => {
-                console.error("Error al obtener productos:", error);
-            });
+    const fetchProductos = async () => {
+    const data = await getProductos();
+
+    // pedir precios ajustados según la estatura
+    const productosConPrecio = await Promise.all(
+        data.map(async (prod) => {
+        const precio_ajustado = await getPrecioAjustado(prod.id, estatura);
+        return { ...prod, precio_ajustado };
+        })
+    );
+
+    setProductos(productosConPrecio);
+    };
+
+    if (estatura) {
+    fetchProductos();
+    }
+    }, [estatura]);
+
+
+    // 🔹 Traer categorías
+    useEffect(() => {
+        const fetchCategorias = async () => {
+            const data = await getCategorias();
+            setCategorias(data);
+        };
+        fetchCategorias();
     }, []);
 
-    // Ajuste de precio según estatura
-    const calcularPrecio = (producto, estatura) => {
-        const precio = parseFloat(producto.precio_base);
-        const tipoMueble = producto.categoria; // ⚠️ ojo: depende de tu API
+    // 🔹 Ajustar categoría activa cuando cambia la URL
+    useEffect(() => {
+        setCategoriaActiva(categoriaURL || 'todos');
+    }, [categoriaURL]);
 
-        if (["mesa", "silla", "sofa"].includes(tipoMueble)) {
-            if (estatura < 1.30) return precio;
-            if (estatura >= 1.30 && estatura < 1.70) return precio * 1.1;
-            if (estatura >= 1.70) return precio * 1.25;
-        }
-        return precio;
-    };
 
-    // Tus categorías (puedes mapear con IDs si en Django vienen como números)
-    const categorias = {
-        todos: { nombre: "Todos los productos", subcategorias: [] },
-        1: { nombre: "Baño", subcategorias: ["almacenamiento", "espejos", "accesorios"] },
-        2: { nombre: "Cocina", subcategorias: ["muebles", "accesorios", "organizacion"] },
-        3: { nombre: "Living & Comedor", subcategorias: ["mesas", "sillas", "sofas", "estanterias"] },
-        4: { nombre: "Taller", subcategorias: ["mesas", "organizacion", "herramientas"] },
-        5: { nombre: "Habitación", subcategorias: ["camas", "mesillas", "armarios", "comodas"] }
-    };
 
-    const handleCategoriaClick = (cat) => {
-        if (cat === 'todos') {
-            setSearchParams({});
-        } else {
-            setSearchParams({ categoria: cat });
-        }
-        setFiltrosSubcategorias([]);
-    };
-
-    const handleSubcategoriaChange = (sub) => {
-        setFiltrosSubcategorias(prev => {
-            if (prev.includes(sub)) {
-                return prev.filter(item => item !== sub);
-            } else {
-                return [...prev, sub];
-            }
-        });
-    };
-
+    // 🔹 Filtrado por categoría
     const productosFiltrados = productos.filter(producto => {
         if (categoriaActiva !== 'todos' && String(producto.categoria) !== String(categoriaActiva)) {
             return false;
         }
-        if (filtrosSubcategorias.length > 0) {
-            return filtrosSubcategorias.includes(producto.subcategoria);
-        }
         return true;
     });
 
+    const handleCategoriaClick = (catId) => {
+        if (catId === 'todos') {
+            setSearchParams({});
+        } else {
+            setSearchParams({ categoria: catId });
+        }
+    };
+
     const limpiarFiltros = () => {
         setSearchParams({});
-        setFiltrosSubcategorias([]);
     };
-    
+
     return (
         <div className="catalogo-container">
 
@@ -109,32 +92,25 @@ const Catalogo = () => {
                     </div>
                     
                     <div className="categorias-principales">
-                        {Object.entries(categorias).map(([key, value]) => (
-                            <div key={key} className="categoria-bloque">
-                                <button
-                                    className={`categoria-btn ${categoriaActiva === key ? 'activa' : ''}`}
-                                    onClick={() => handleCategoriaClick(key)}
-                                >
-                                    {value.nombre}
-                                </button>
-    
-                                {value.subcategorias.length > 0 && (
-                                    <div className="subcategorias-list">
-                                        {value.subcategorias.map(subcategoria => (
-                                            <label key={subcategoria} className="filtro-checkbox">
-                                                <input
-                                                    type="checkbox"
-                                                    checked={filtrosSubcategorias.includes(subcategoria)}
-                                                    onChange={() => handleSubcategoriaChange(subcategoria)}
-                                                />
-                                                <span className="checkmark"></span>
-                                                {subcategoria.charAt(0).toUpperCase() + subcategoria.slice(1)}
-                                            </label>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        ))}
+                        <div className="categoria-bloque">
+                            <button
+                                className={`categoria-btn ${categoriaActiva === 'todos' ? 'activa' : ''}`}
+                                onClick={() => handleCategoriaClick('todos')}
+                            >
+                                Todos los productos
+                            </button>
+                        </div>
+
+                        {categorias.map(cat => (
+                        <div key={cat.id} className="categoria-bloque">
+                            <button
+                                className={`categoria-btn ${String(categoriaActiva) === String(cat.id) ? 'activa' : ''}`}
+                                onClick={() => handleCategoriaClick(cat.id)}
+                            >
+                                {cat.categorias}
+                            </button>
+                        </div>
+                    ))}
                     </div>
                 </div>
                 
@@ -142,10 +118,8 @@ const Catalogo = () => {
                     <div className="productos-info">
                         <p>
                             {categoriaActiva === 'todos' 
-                            ? 'Todos los productos' 
-                            : `Categoría: ${categorias[categoriaActiva]?.nombre}`}
-                            {filtrosSubcategorias.length > 0 && 
-                            ` - Filtros: ${filtrosSubcategorias.map(sc => sc.charAt(0).toUpperCase() + sc.slice(1)).join(', ')}`}
+                                ? 'Todos los productos' 
+                                : `Categoría: ${categorias.find(c => String(c.id) === String(categoriaActiva))?.nombre || ""}`}
                         </p>
                         <span className="productos-count">{productosFiltrados.length} productos</span>
                     </div>
@@ -162,17 +136,17 @@ const Catalogo = () => {
                                             alt={producto.nombre} 
                                         />
                                         <span className="producto-categoria">
-                                            {categorias[String(producto.categoria)]?.nombre || "Sin categoría"}
+                                            {categorias.find(c => String(c.id) === String(producto.categoria))?.categorias || "Sin categoría"}
                                         </span>
                                     </div>
                                     <div className="producto-info">
-                                        <h3>
-                                            <Link to={`/producto/${producto.id}`}>{producto.nombre}</Link>
-                                        </h3>
-                                        <p>{producto.descripcion}</p>
+                                        <h3><Link to={`/producto/${producto.id}`}>{producto.nombre}</Link></h3>
+                                        <p>{producto.descripcion_breve}</p>
+                                        <p><i>{producto.descripcion_detallada}</i></p>
                                         <p className="producto-precio">
-                                            ${calcularPrecio(producto, estatura).toFixed(0)}
+                                            ${producto.precio_ajustado?.toFixed(0) || producto.precio_base}
                                         </p>
+                                        <p>Altura ajustada: {producto.altura_ajustada}</p>
                                         <p>Stock: {producto.stock}</p>
                                         <button className="btn-agregar">Lo Quiero</button>
                                     </div>
@@ -180,7 +154,7 @@ const Catalogo = () => {
                             ))
                         ) : (
                             <div className="no-productos">
-                                <p>No hay productos que coincidan con los filtros seleccionados.</p>
+                                <p>No hay productos que coincidan con la categoría seleccionada.</p>
                                 <button onClick={limpiarFiltros} className="btn-limpiar">Ver todos los productos</button>
                             </div>
                         )}
