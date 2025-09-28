@@ -1,108 +1,234 @@
-
+// src/pages/ProductoDetalle.js
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { EstaturaContext } from '../components/EstaturaContext'; // Importa el contexto
-import './ProductoDetalle.css'; 
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { EstaturaContext } from '../components/EstaturaContext';
+import { getProductoById, getPrecioAjustado, getCategorias } from "../api";
+import './ProductoDetalle.css';
 
 const ProductoDetalle = () => {
-    // Obtener la estatura del contexto
-    const { estatura } = useContext(EstaturaContext);
     const { id } = useParams();
     const navigate = useNavigate();
+    const { estatura } = useContext(EstaturaContext);
+    
     const [producto, setProducto] = useState(null);
+    const [precioCalculado, setPrecioCalculado] = useState(null);
+    const [categorias, setCategorias] = useState([]);
+    const [cargando, setCargando] = useState(true);
+    const [error, setError] = useState(null);
 
-    // Redirige si no hay estatura
     useEffect(() => {
         if (!estatura) {
-            navigate('/catalogo');
+            navigate('/');
+            return;
         }
     }, [estatura, navigate]);
 
-    const productos = [
-        { id: 1, nombre: "Mesa de centro rústica", precioBase: 120, categoria: "livingcomedor", subcategoria: "mesas", imagen: "https://images.unsplash.com/photo-1540938138722-e7d69956d357", descripcion: "Mesa de centro robusta con acabado de madera natural, ideal para ambientes rústicos.", tipoMueble: "mesa" },
-        { id: 2, nombre: "Silla de comedor 'Minimal'", precioBase: 80, categoria: "livingcomedor", subcategoria: "sillas", imagen: "https://images.unsplash.com/photo-1586158226065-27a810f27916", descripcion: "Silla de diseño minimalista en roble claro, cómoda y duradera.", tipoMueble: "silla" },
-        { id: 3, nombre: "Estantería de baño", precioBase: 150, categoria: "baño", subcategoria: "almacenamiento", imagen: "https://images.unsplash.com/photo-1620166299863-149b25b50f75", descripcion: "Solución de almacenamiento ideal para organizar tus artículos de baño con estilo.", tipoMueble: "estanteria" },
-        { id: 4, nombre: "Tabla de cortar de acacia", precioBase: 45, categoria: "cocina", subcategoria: "accesorios", imagen: "https://images.unsplash.com/photo-1582877977465-b1a774b786f0", descripcion: "Tabla de cortar de alta calidad, resistente y con un hermoso veteado de madera.", tipoMueble: "accesorio" },
-        { id: 5, nombre: "Banco de trabajo de pino", precioBase: 300, categoria: "taller", subcategoria: "mesas", imagen: "https://images.unsplash.com/photo-1510906594247-c0f531065191", descripcion: "Banco robusto y funcional para tus proyectos de carpintería.", tipoMueble: "mesa" },
-        { id: 6, nombre: "Cama king size 'Elegance'", precioBase: 700, categoria: "habitacion", subcategoria: "camas", imagen: "https://images.unsplash.com/photo-1540638342410-b9d9a0d84a7e", descripcion: "Una cama espaciosa y confortable para un descanso de lujo.", tipoMueble: "cama" },
-        { id: 7, nombre: "Espejo con marco de nogal", precioBase: 100, categoria: "baño", subcategoria: "espejos", imagen: "https://images.unsplash.com/photo-1594952044358-868725832a82", descripcion: "Espejo de pared con un elegante marco de madera, perfecto para cualquier baño.", tipoMueble: "espejo" },
-        { id: 8, nombre: "Isla de cocina con cajones", precioBase: 550, categoria: "cocina", subcategoria: "muebles", imagen: "https://images.unsplash.com/photo-1628169994644-24584281edde", descripcion: "Isla de cocina versátil con espacio de almacenamiento adicional y superficie de trabajo.", tipoMueble: "mesa" },
-        { id: 9, nombre: "Sofá de madera escandinavo", precioBase: 700, categoria: "livingcomedor", subcategoria: "sofas", imagen: "https://images.unsplash.com/photo-1615964893922-0ef3d1591873", descripcion: "Sofá de diseño escandinavo, ideal para cualquier sala de estar moderna.", tipoMueble: "sofa" },
-        { id: 10, nombre: "Organizador de herramientas de pared", precioBase: 100, categoria: "taller", subcategoria: "organizacion", imagen: "https://images.unsplash.com/photo-1601701391295-d06efd01309f", descripcion: "Organizador práctico y resistente para mantener tus herramientas ordenadas.", tipoMueble: "organizacion" },
-        { id: 11, nombre: "Mesa de noche de cerezo", precioBase: 110, categoria: "habitacion", subcategoria: "mesillas", imagen: "https://images.unsplash.com/photo-1619895058693-4a11b61c8a14", descripcion: "Mesa de noche compacta con un cajón, perfecta para espacios pequeños.", tipoMueble: "mesa" },
-        { id: 12, nombre: "Perchero de pared", precioBase: 75, categoria: "baño", subcategoria: "accesorios", imagen: "https://images.unsplash.com/photo-1627991465223-96b1b44d3203", descripcion: "Perchero de pared funcional con múltiples ganchos para toallas o ropa.", tipoMueble: "accesorio" },
-    ];
-    
     useEffect(() => {
-        const productoEncontrado = productos.find(p => p.id === parseInt(id));
-        setProducto(productoEncontrado);
-    }, [id, productos]);
+        const fetchData = async () => {
+            try {
+                setCargando(true);
+                setError(null);
+                
+                // Cargar producto y categorías en paralelo
+                const [productoData, categoriasData] = await Promise.all([
+                    getProductoById(id),
+                    getCategorias()
+                ]);
 
-    // Función para calcular el precio dinámicamente según la estatura
-    const calcularPrecio = (producto, estatura) => {
-        const { tipoMueble, precioBase } = producto;
-        if (tipoMueble === 'mesa' || tipoMueble === 'silla' || tipoMueble === 'sofa') {
-            if (estatura < 1.30) return precioBase;
-            if (estatura >= 1.30 && estatura < 1.40) return precioBase * 1.1;
-            if (estatura >= 1.40) return precioBase * 1.25;
+                if (!productoData) {
+                    setError('Producto no encontrado');
+                    return;
+                }
+
+                setProducto(productoData);
+                setCategorias(categoriasData);
+
+                // Calcular precio ajustado
+                if (estatura) {
+                    const precio = await getPrecioAjustado(id, estatura);
+                    setPrecioCalculado(precio);
+                }
+
+            } catch (error) {
+                console.error('Error al cargar producto:', error);
+                setError('Error al cargar el producto');
+            } finally {
+                setCargando(false);
+            }
+        };
+
+        fetchData();
+    }, [id, estatura]);
+
+    const construirUrlImagen = (imagenPath) => {
+        if (!imagenPath) return 'https://via.placeholder.com/600x400?text=Imagen+No+Disponible';
+        
+        if (imagenPath.startsWith('http')) {
+            return imagenPath;
         }
-        return precioBase;
-    };
-    
-    // Función para calcular dimensiones proporcionales
-    const calcularDimensiones = (tipoMueble, estatura) => {
-        if (tipoMueble === 'mesa') {
-            const alturaMesa = estatura * 0.45;
-            return { altura: `${alturaMesa.toFixed(2)}m`, ancho: '1.2m', largo: '0.8m' };
-        }
-        if (tipoMueble === 'silla') {
-            const alturaSilla = estatura * 0.25;
-            return { altura: `${alturaSilla.toFixed(2)}m`, ancho: '0.5m', largo: '0.5m' };
-        }
-        if (tipoMueble === 'sofa') {
-            const alturaSofa = estatura * 0.40;
-            return { altura: `${alturaSofa.toFixed(2)}m`, ancho: '2.0m', largo: '0.9m' };
-        }
-        return { altura: 'N/A', ancho: 'N/A', largo: 'N/A' };
+        
+        return `http://127.0.0.1:8000${imagenPath}`;
     };
 
-    if (!producto || !estatura) {
+    const formatearPrecio = (precio) => {
+        return new Intl.NumberFormat('es-ES').format(precio);
+    };
+
+    const getNombreCategoria = (categoriaId) => {
+        const categoria = categorias.find(cat => String(cat.id) === String(categoriaId));
+        return categoria ? categoria.categorias : 'Sin categoría';
+    };
+
+    if (cargando) {
         return (
-            <div className="producto-detalle-container">
-                <p>Cargando información o no se ha ingresado la estatura.</p>
-                <button onClick={() => navigate('/catalogo')}>Ingresar Estatura</button>
+            <div className="cargando-container">
+                <div className="cargando-spinner"></div>
+                <p>Cargando producto...</p>
             </div>
         );
     }
 
-    const precioDinamico = calcularPrecio(producto, estatura);
-    const dimensiones = calcularDimensiones(producto.tipoMueble, estatura);
+    if (error) {
+        return (
+            <div className="error-container">
+                <div className="error-message">
+                    <h2>Error</h2>
+                    <p>{error}</p>
+                    <Link to="/catalogo" className="btn-volver">Volver al catálogo</Link>
+                </div>
+            </div>
+        );
+    }
+
+    if (!producto) {
+        return (
+            <div className="error-container">
+                <div className="error-message">
+                    <h2>Producto no encontrado</h2>
+                    <p>El producto que buscas no existe.</p>
+                    <Link to="/catalogo" className="btn-volver">Volver al catálogo</Link>
+                </div>
+            </div>
+        );
+    }
+
+    const precioFinal = precioCalculado || producto.precio_base;
+    const tieneDescuento = precioCalculado && precioCalculado !== producto.precio_base;
 
     return (
         <div className="producto-detalle-container">
-            <button onClick={() => navigate(-1)} className="btn-volver">Volver al Catálogo</button>
+            {/* Breadcrumb */}
+            <nav className="breadcrumb">
+                <Link to="/">Inicio</Link>
+                <span> / </span>
+                <Link to="/catalogo">Catálogo</Link>
+                <span> / </span>
+                <span>{producto.nombre}</span>
+            </nav>
+
             <div className="producto-detalle-content">
-                <div className="producto-detalle-imagen">
-                    <img src={producto.imagen} alt={producto.nombre} />
+                {/* Sección de imagen */}
+                <div className="producto-imagen-section">
+                    <div className="imagen-principal">
+                        <img 
+                            src={construirUrlImagen(producto.imagen)} 
+                            alt={producto.nombre}
+                            onError={(e) => {
+                                e.target.src = 'https://via.placeholder.com/600x400?text=Imagen+No+Disponible';
+                            }}
+                        />
+                    </div>
                 </div>
-                <div className="producto-detalle-info">
-                    <h1>{producto.nombre}</h1>
-                    <p className="producto-precio-detalle">${precioDinamico.toFixed(0)}</p>
-                    <p className="producto-descripcion">{producto.descripcion}</p>
-                    <p className="producto-categoria-detalle">Categoría: <span>{producto.categoria}</span></p>
-                    <p className="producto-subcategoria-detalle">Subcategoría: <span>{producto.subcategoria}</span></p>
-                    {dimensiones.altura !== 'N/A' && (
-                        <div>
-                            <h4>Dimensiones recomendadas para tu estatura:</h4>
-                            <ul>
-                                <li>Altura: **{dimensiones.altura}**</li>
-                                <li>Ancho: **{dimensiones.ancho}**</li>
-                                <li>Largo: **{dimensiones.largo}**</li>
-                            </ul>
+
+                {/* Sección de información */}
+                <div className="producto-info-section">
+                    <div className="producto-header">
+                        <span className="categoria-badge">
+                            {getNombreCategoria(producto.categoria)}
+                        </span>
+                        <h1>{producto.nombre}</h1>
+                        <p className="descripcion-breve">{producto.descripcion_breve}</p>
+                    </div>
+
+                    {/* Precio */}
+                    <div className="precio-section">
+                        <div className="precio-actual">
+                            ${formatearPrecio(precioFinal)}
                         </div>
-                    )}
-                    <button className="btn-agregar-detalle">Agregar al carrito</button>
+                        {tieneDescuento && (
+                            <div className="precio-comparacion">
+                                <span className="precio-base">
+                                    Precio base: ${formatearPrecio(producto.precio_base)}
+                                </span>
+                                <span className="ahorro">
+                                    Ahorras: ${formatearPrecio(producto.precio_base - precioFinal)}
+                                </span>
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Información de estatura */}
+                    <div className="estatura-info">
+                        <p>
+                            <strong>Precio ajustado para tu estatura:</strong> {estatura}m
+                        </p>
+                    </div>
+
+                    {/* Especificaciones */}
+                    <div className="especificaciones">
+                        <h3>Especificaciones</h3>
+                        <div className="especificaciones-grid">
+                            <div className="especificacion-item">
+                                <span className="especificacion-label">Tipo de mueble:</span>
+                                <span className="especificacion-value">{producto.tipo_mueble}</span>
+                            </div>
+                            <div className="especificacion-item">
+                                <span className="especificacion-label">Altura ideal:</span>
+                                <span className="especificacion-value">{producto.altura} cm</span>            
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Botones de acción */}
+                    <div className="acciones-section">
+                        {producto.stock > 0 ? (
+                            <div className="botones-accion">
+                                <button className="btn-principal" onClick={() => alert('Función de "Lo Quiero" en desarrollo')}>
+                                    Lo Quiero
+                                </button>
+                                <button className="btn-secundario" onClick={() => alert('Función de contacto en desarrollo')}>
+                                    Contactar para más información
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="producto-agotado">
+                                <p>Producto temporalmente agotado</p>
+                                <button className="btn-contacto">
+                                    Notificarme cuando esté disponible
+                                </button>
+                            </div>
+                        )}
+                    </div>
                 </div>
+            </div>
+
+            {/* Descripción detallada */}
+            <div className="descripcion-detallada-section">
+                <h3>Descripción Detallada</h3>
+                <div className="descripcion-content">
+                    {producto.descripcion ? (
+                        <p>{producto.descripcion}</p>
+                    ) : (
+                        <p className="sin-descripcion">No hay descripción detallada disponible para este producto.</p>
+                    )}
+                </div>
+            </div>
+
+            {/* Botón volver */}
+            <div className="volver-section">
+                <Link to="/catalogo" className="btn-volver-catalogo">
+                    ← Volver al catálogo
+                </Link>
             </div>
         </div>
     );

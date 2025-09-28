@@ -29,8 +29,7 @@ nombre: prod.nombre,
 categoria: prod.categoria,
 stock: prod.stock,
 precio_base: prod.precio_base,
-descripcion_detallada: prod.descripcion_detallada,
-descripcion_breve: prod.descripcion_breve,
+descripcion: prod.descripcion,
 tipo_mueble: prod.tipo_mueble,
 altura: prod.altura,
 fecha_creacion: prod.fecha_creacion,
@@ -69,9 +68,10 @@ const response = await axios.get(
     `${BASE_URL}productos/${productoId}/calcular_precio/`,
     { params: { altura } }
 );
-return response.data.precio; // asegúrate de que tu API devuelve { "precio": X }
+return response.data.precio || response.data.precio_calculado;
 } catch (error) {
 console.error(`Error al calcular precio para producto ${productoId}:`, error);
 return null;
 }
 };
+
