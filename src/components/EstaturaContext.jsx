@@ -1,21 +1,30 @@
-// src/contexts/EstaturaContext.jsx
+import React, { createContext, useState, useEffect } from 'react';
 
-import React, { createContext, useState } from 'react';
-
-// 1. Crea el Contexto
 export const EstaturaContext = createContext();
 
-// 2. Crea el Provider (proveedor de datos)
 export const EstaturaProvider = ({ children }) => {
-    // El estado que guardará la estatura. Lo inicializamos en null.
-    const [estatura, setEstatura] = useState(null);
+const [estatura, setEstatura] = useState(() => {
+// ✅ Cargar estatura desde localStorage al iniciar
+const saved = localStorage.getItem('estatura');
+return saved ? JSON.parse(saved) : null;
+});
 
-    // El valor que se compartirá con todos los componentes
-    const value = { estatura, setEstatura };
+useEffect(() => {
+// ✅ Guardar estatura cuando cambia
+if (estatura !== null) {
+    localStorage.setItem('estatura', JSON.stringify(estatura));
+}
+}, [estatura]);
 
-    return (
-        <EstaturaContext.Provider value={value}>
-            {children}
-        </EstaturaContext.Provider>
-    );
+// ✅ Función para limpiar la estatura (botón "Cambiar estatura")
+const resetEstatura = () => {
+localStorage.removeItem('estatura');
+setEstatura(null);
+};
+
+return (
+<EstaturaContext.Provider value={{ estatura, setEstatura, resetEstatura }}>
+    {children}
+</EstaturaContext.Provider>
+);
 };

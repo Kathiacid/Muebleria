@@ -1,100 +1,151 @@
-/* src/components/Navbar.css */
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+.navbar-mainbg {
+background-color: #34b1b1;
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 0 20px;
+height: 85px;
+position: relative;
+z-index: 2;
+margin-bottom: 30px;
 }
 
-.navbanner {
-    display: flex;
-    justify-content: space-between; /* Espacia los elementos a los lados */
-    align-items: center; /* Centra los elementos verticalmente */
-    background-color: #34b1b1; /* Color de ejemplo más cálido */
-    padding: 0 2rem; /* Espaciado horizontal */
-    height: 60px; /* Una altura más estándar */
+.navbar-logo {
+color: #fff;
+font-size: 18px;
+font-weight: 500;
 }
 
-.lista {
-    display: flex;
-    list-style: none;
-    gap: 2rem; /* Espacio entre los elementos de la lista */
-    margin: 0; /* Asegura que no haya márgenes no deseados */
+.navbar-nav {
+display: flex;
+align-items: center;
+list-style: none;
+position: relative;
+margin: 0;
+padding: 0;
+height: 100%;
 }
 
-.navbanner a,
-.catalog-trigger {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    padding: 0.5rem 0;
+.navbar-nav li {
+position: relative;
+height: 100%;
+display: flex;
+align-items: center;
 }
 
-.navbanner a:hover,
-.catalog-trigger:hover {
-    color: #000000; /* Un color de hover más claro */
+.navbar-nav li a,
+.navbar-nav li span {
+color: rgba(255, 255, 255, 0.7);
+text-decoration: none;
+padding: 0 20px;
+font-size: 15px;
+display: flex;
+align-items: center;
+height: 100%;
+cursor: pointer;
+transition: color 0.3s ease;
+z-index: 2;
 }
 
-/* Item de catálogo */
-.catalog-item {
-    position: relative;
-    cursor: pointer;
-    height: 100%; 
-    align-items: center;
+.navbar-nav li.active a,
+.navbar-nav li.active span {
+color: #34b1b1;
 }
 
-/* Menú desplegable */
+/* ---------- Selector animado con curvas inferiores ---------- */
+.hori-selector {
+position: absolute;
+background-color: #F1F1F1;
+top: 0;
+left: 0;
+border-top-left-radius: 15px;
+border-top-right-radius: 15px;
+height: 100%;
+transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+z-index: 1;
+
+}
+
+/* los “bloques” laterales */
+.hori-selector .left,
+.hori-selector .right {
+position: absolute;
+width: 25px;
+height: 25px;
+background-color: #fff;
+bottom: 0px;
+z-index: 0;
+display: block;
+}
+
+/* posiciones */
+.hori-selector .left {
+left: -25px;
+background-color: #F1F1F1;
+
+}
+
+.hori-selector .right {
+right: -25px;
+background-color: #F1F1F1;
+}
+
+/* los círculos que forman las curvas */
+.hori-selector .left::before,
+.hori-selector .right::before {
+content: "";
+position: absolute;
+width: 50px;
+height: 50px;
+border-radius: 50%;
+background-color: #34b1b1; /* color del fondo del navbar */
+}
+
+/* curva izquierda */
+.hori-selector .left::before {
+bottom: 0;
+left: -25px;
+}
+
+/* curva derecha */
+.hori-selector .right::before {
+bottom: 0;
+right: -25px;
+}
+
+
+/* Buscador */
+.buscador input {
+padding: 5px 10px;
+border: none;
+border-radius: 5px;
+}
+
+/* ---------- Dropdown funcional ---------- */
 .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: white;
-    min-width: 200px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-radius: 4px;
-    padding: 0.5rem 0;
-    z-index: 1000;
-    animation: fadeIn 0.2s ease-in-out;
-    display: flex;
-    flex-direction: column;
+position: absolute;
+top: 80%;
+left: 0;
+background: white;
+border-radius: 8px;
+padding: 10px 0;
+display: none;
+flex-direction: column;
+min-width: 160px;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+z-index: 10; /* más alto que el hori-selector */
+
 }
 
-.dropdown-menu span { /* Cambiado de a a span para el nuevo enfoque de navegación */
-    color: #333;
-    padding: 0.75rem 1.5rem;
-    display: block;
-    text-decoration: none;
-    font-weight: 400;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+.dropdown-menu.show {
+display: flex;
+
 }
+
+
 
 .dropdown-menu span:hover {
-    background-color: #f0f0f0;
-    color: #34b1b1;
-}
-
-/* Animación */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.buscador {
-    display: flex;
-    align-items: center;
-}
-
-.buscador input {
-    padding: 0.5rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    min-width: 200px;
+background-color: rgba(81, 97, 206, 0.1);
 }

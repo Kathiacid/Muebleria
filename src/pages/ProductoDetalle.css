@@ -334,3 +334,85 @@
         font-size: 2rem;
     }
 }
+
+/* === MODAL === */
+.modal-overlay {
+position: fixed;
+inset: 0;
+background-color: rgba(0, 0, 0, 0.55);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 999;
+}
+
+.modal-contenido {
+background-color: white;
+border-radius: 12px;
+width: 320px;
+padding: 25px;
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+position: relative;
+animation: aparecer 0.25s ease;
+}
+
+@keyframes aparecer {
+from { transform: scale(0.9); opacity: 0; }
+to { transform: scale(1); opacity: 1; }
+}
+
+.modal-cerrar {
+position: absolute;
+top: 10px;
+right: 12px;
+background: none;
+border: none;
+font-size: 20px;
+cursor: pointer;
+color: #666;
+}
+
+.modal-cerrar:hover {
+color: #000;
+}
+
+.modal-titulo {
+font-size: 18px;
+font-weight: bold;
+margin-bottom: 10px;
+text-align: center;
+}
+
+.formulario {
+display: flex;
+flex-direction: column;
+gap: 10px;
+}
+
+.formulario input {
+padding: 8px;
+border-radius: 6px;
+border: 1px solid #ccc;
+font-size: 14px;
+}
+
+.btn-enviar {
+background-color: #28a745;
+color: white;
+border: none;
+padding: 10px;
+border-radius: 6px;
+cursor: pointer;
+font-weight: 600;
+transition: background-color 0.2s ease;
+}
+
+.btn-enviar:hover {
+background-color: #218838;
+}
+
+.mensaje {
+text-align: center;
+margin-top: 15px;
+font-weight: bold;
+}

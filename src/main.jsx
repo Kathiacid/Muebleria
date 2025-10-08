@@ -1,5 +1,4 @@
 // src/main.jsx
-
 import React, { StrictMode } from "react"
 import ReactDOM from "react-dom/client"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
@@ -12,12 +11,14 @@ import Catalogo from "./pages/Catalogo"
 import Confirmacion from "./pages/Confirmacion"
 import DetalleProducto from "./pages/ProductoDetalle"
 import SobreNosotros from "./pages/SobreNosotros"
+import BotonEstaturaFlotante from "./components/BotonEstaturaFlotante"; 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <StrictMode>
         <EstaturaProvider>
             <BrowserRouter>
-                <Navbar /> 
+                <Navbar />
+                <BotonEstaturaFlotante />  
                 <Routes>
                     {/* La página de inicio es ahora una página de bienvenida general */}
                     <Route path="/" element={<Home />} />
