@@ -1,14 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { EstaturaContext } from '../components/EstaturaContext';
 import { getProductoById, getPrecioAjustado, getCategorias } from "../api";
 import axios from 'axios';
 import './ProductoDetalle.css';
 
+// ✅ Importar reCAPTCHA
+import ReCAPTCHA from 'react-google-recaptcha';
+
 const ProductoDetalle = () => {
 const { id } = useParams();
 const navigate = useNavigate();
 const { estatura } = useContext(EstaturaContext);
+
+// ✅ Referencia para reCAPTCHA
+const recaptchaRef = useRef();
 
 const [producto, setProducto] = useState(null);
 const [precioCalculado, setPrecioCalculado] = useState(null);
@@ -21,17 +27,23 @@ const [showForm, setShowForm] = useState(false);
 const [formData, setFormData] = useState({
 nombre: '',
 email: '',
+telefono: '',
 cantidad: 1,
+ciudad: '',
+comuna: '',
+pedido_detallado: ''
 });
 const [mensaje, setMensaje] = useState('');
 const [loadingForm, setLoadingForm] = useState(false);
 
+// ✅ Estado para el token de reCAPTCHA
+const [recaptchaToken, setRecaptchaToken] = useState('');
+
 useEffect(() => {
 if (!estatura) {
-console.log('No hay estatura definida, pero no redirigimos automáticamente');
+    console.log('No hay estatura definida, pero no redirigimos automáticamente');
 }
 }, [estatura]);
-
 
 useEffect(() => {
 const fetchData = async () => {
@@ -88,23 +100,61 @@ setFormData({
 });
 };
 
-// ✅ enviar datos al backend
+// ✅ Manejar cambio de reCAPTCHA
+const handleRecaptchaChange = (token) => {
+setRecaptchaToken(token);
+};
+
+// ✅ Reiniciar reCAPTCHA
+const resetRecaptcha = () => {
+setRecaptchaToken('');
+if (recaptchaRef.current) {
+    recaptchaRef.current.reset();
+}
+};
+
+// ✅ Cerrar modal y reiniciar
+const cerrarModal = () => {
+setShowForm(false);
+resetRecaptcha();
+};
+
+// ✅ enviar datos al backend CON reCAPTCHA
 const handleSubmit = async (e) => {
 e.preventDefault();
 setLoadingForm(true);
 setMensaje('');
 
+// ✅ Validar reCAPTCHA
+if (!recaptchaToken) {
+    setMensaje('❌ Por favor, verifica que no eres un robot');
+    setLoadingForm(false);
+    return;
+}
+
 try {
     await axios.post('http://localhost:8000/api/pedidos/', {
     producto_id: producto.id,
     ...formData,
+    recaptcha_token: recaptchaToken, // ✅ Enviar token al backend
     });
+    
     setMensaje('✅ Pedido enviado con éxito');
-    setFormData({ nombre: '', email: '', cantidad: 1 });
+    setFormData({ 
+    nombre: '', 
+    email: '', 
+    telefono: '',
+    cantidad: 1,
+    ciudad: '',
+    comuna: '',
+    pedido_detallado: ''
+    });
+    resetRecaptcha();
     setShowForm(false);
 } catch (error) {
     console.error(error);
     setMensaje('❌ Error al enviar el pedido');
+    resetRecaptcha();
 } finally {
     setLoadingForm(false);
 }
@@ -186,7 +236,6 @@ return (
         <div className="acciones-section">
         {producto.stock > 0 ? (
             <div className="botones-accion">
-            {/* ✅ Aquí se abre el formulario */}
             <button className="btn-principal" onClick={() => setShowForm(true)}>
                 Lo Quiero
             </button>
@@ -220,43 +269,66 @@ return (
     </Link>
     </div>
 
-    {/* ✅ Modal del formulario */}
+    {/* ✅ Modal del formulario CON reCAPTCHA */}
     {showForm && (
-            <div className="modal-overlay">
-                <div className="modal-contenido">
-                    <button className="modal-cerrar" onClick={() => setShowForm(false)}>✕</button>
-                    <h3 className="modal-titulo">Completa tus datos</h3>
+    <div className="modal-overlay">
+        <div className="modal-contenido">
+        <button className="modal-cerrar" onClick={cerrarModal}>✕</button>
+        <h3 className="modal-titulo">Completa tus datos</h3>
 
-                    <form onSubmit={handleSubmit} className="formulario">Nombre
-                        <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />Correo electrónico
-                        <input type="email" name="email" value={formData.email} onChange={handleChange} required />Teléfono
-                        <input type="tel" name="telefono" value={formData.telefono} onChange={handleChange} required />Cantidad
-                        <input type="number" name="cantidad" min="1" value={formData.cantidad} onChange={handleChange} required />
-                        <span>Ciudad</span>
+        <form onSubmit={handleSubmit} className="formulario">
+            <label>Nombre</label>
+            <input type="text" name="nombre" value={formData.nombre} onChange={handleChange} required />
+            
+            <label>Correo electrónico</label>
+            <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+            
+            <label>Teléfono</label>
+            <input type="tel" name="telefono" value={formData.telefono} onChange={handleChange} required />
+            
+            <label>Cantidad</label>
+            <input type="number" name="cantidad" min="1" value={formData.cantidad} onChange={handleChange} required />
+            
+            <label>Ciudad</label>
+            <select name="ciudad" value={formData.ciudad} onChange={handleChange} required>
+            <option value="Concepción">Concepción</option>
+            </select>
+            
+            <label>Comuna</label>
+            <select name="comuna" value={formData.comuna} onChange={handleChange} required>
+            <option value="Concepción">Concepción</option>
+            <option value="Talcahuano">Talcahuano</option>
+            <option value="Chiguayante">Chiguayante</option>
+            <option value="San Pedro de la Paz">San Pedro de la Paz</option>
+            <option value="Hualpén">Hualpén</option>
+            </select>
+            
+            <label>Indicaciones opcionales</label>
+            <textarea
+            name="pedido_detallado"
+            value={formData.pedido_detallado}
+            onChange={handleChange}
+            placeholder="Ej: Color preferido, detalles específicos, etc."
+            />
 
-                        <select name="ciudad" value={formData.ciudad} onChange={handleChange} required>
-                            <option value="Concepción">Concepción</option>
-                        </select>
-                        <span>Comuna</span>
-                        <select name="comuna" value={formData.comuna} onChange={handleChange} required>
-                            <option value="Concepción">Concepción</option>
-                            <option value="Talcahuano">Talcahuano</option>
-                            <option value="Chiguayante">Chiguayante</option>
-                            <option value="San Pedro de la Paz">San Pedro de la Paz</option>
-                            <option value="Hualpén">Hualpén</option>
-                        </select>
-                        <span>Indicaciones opcionales</span>
-                        <textarea
-                            name="pedido_detallado"
-                            value={formData.pedido_detallado}
-                            onChange={handleChange}
-                        />
+            {/* ✅ reCAPTCHA - REEMPLAZA 'TU_SITE_KEY' con tu key real */}
+            <div className="recaptcha-container">
+            <ReCAPTCHA
+                ref={recaptchaRef}
+                sitekey="6LejYuUrAAAAAGH5AC6njVOlqHFDMxjlqfs_12Up" // ✅ Key de prueba para localhost
+                onChange={handleRecaptchaChange}
+            />
+            </div>
 
-                        <p className="nota">💡 En caso de cambiar la estatura, el precio se recalculará.</p>
+            <p className="nota">💡 En caso de cambiar la estatura, el precio se recalculará.</p>
 
-                        <button type="submit" className="btn-enviar" disabled={loadingForm}>
-                            {loadingForm ? 'Enviando...' : 'Enviar pedido'}
-                        </button>
+            <button 
+            type="submit" 
+            className="btn-enviar" 
+            disabled={loadingForm || !recaptchaToken}
+            >
+            {loadingForm ? 'Enviando...' : 'Enviar pedido'}
+            </button>
         </form>
         </div>
     </div>

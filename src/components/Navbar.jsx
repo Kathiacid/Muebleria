@@ -45,7 +45,7 @@ if (busqueda.trim() !== "") {
     if (!estatura) {
     navigate("/estatura");
     } else {
-    navigate(`/catalogo-completo?search=${busqueda}`);
+    navigate(`/catalogo?search=${busqueda}`);
     }
     setBusqueda("");
 }
@@ -58,15 +58,17 @@ if (!estatura) {
     return;
 }
 if (categoria === "todos") {
-    navigate("/catalogo-completo");
+    navigate("/catalogo");
 } else {
-    navigate(`/catalogo-completo?categoria=${categoria}`);
+    navigate(`/catalogo?categoria=${categoria}`);
 }
 };
 
 return (
 <nav className="navbar-mainbg">
-    <div className="navbar-logo">Navbar</div>
+    <Link to="/" className="navbar-logo">
+    SOMA
+    </Link>
 
     <ul className="navbar-nav" ref={navRef}>
     {/* El selector animado */}

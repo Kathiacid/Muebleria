@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { EstaturaContext } from '../components/EstaturaContext';
@@ -10,6 +11,7 @@ const Catalogo = () => {
     const navigate = useNavigate();
 
     const categoriaURL = searchParams.get('categoria');
+    const searchTerm = searchParams.get('search')?.toLowerCase() || "";
 
     useEffect(() => {
         if (!estatura) {
@@ -26,18 +28,18 @@ const Catalogo = () => {
     useEffect(() => {
         const fetchProductos = async () => {
             if (!estatura) return;
-            
+
+            setProductos([]); // limpia antes
             setCargando(true);
+
             try {
                 const data = await getProductos();
-
-                // Obtener precios ajustados según la estatura
                 const productosConPrecio = await Promise.all(
                     data.map(async (prod) => {
-                        const precio_calculado = await getPrecioAjustado(prod.id, estatura);
-                        return { 
-                            ...prod, 
-                            precio_calculado: precio_calculado || prod.precio_base 
+                        const precio_calculado = await getPrecioAjustado(prod.id, parseFloat(estatura));
+                        return {
+                            ...prod,
+                            precio_calculado: precio_calculado || prod.precio_base
                         };
                     })
                 );
@@ -67,12 +69,11 @@ const Catalogo = () => {
         setCategoriaActiva(categoriaURL || 'todos');
     }, [categoriaURL]);
 
-    // 🔹 Filtrado por categoría
+    // 🔹 Filtrado combinado por categoría y búsqueda
     const productosFiltrados = productos.filter(producto => {
-        if (categoriaActiva !== 'todos' && String(producto.categoria) !== String(categoriaActiva)) {
-            return false;
-        }
-        return true;
+        const coincideCategoria = categoriaActiva === 'todos' || String(producto.categoria) === String(categoriaActiva);
+        const coincideBusqueda = searchTerm === "" || producto.nombre.toLowerCase().includes(searchTerm);
+        return coincideCategoria && coincideBusqueda;
     });
 
     const handleCategoriaClick = (catId) => {
@@ -87,22 +88,23 @@ const Catalogo = () => {
         setSearchParams({});
     };
 
-    // Función para formatear precio
     const formatearPrecio = (precio) => {
         return new Intl.NumberFormat('es-ES').format(precio);
     };
 
     return (
         <div className="catalogo-container">
-            <p>Mostrando productos ajustados para tu estatura de <strong className="estatura-resaltada">{estatura}m</strong></p>
-            
+            <p>
+                Mostrando productos ajustados para tu estatura de <strong className="estatura-resaltada">{estatura}m</strong>
+            </p>
+
             <div className="catalogo-content">
                 <div className="filtros-sidebar">
                     <div className="filtros-header">
                         <h2>Categorías</h2>
                         <button onClick={limpiarFiltros} className="btn-limpiar">Limpiar filtros</button>
                     </div>
-                    
+
                     <div className="categorias-principales">
                         <div className="categoria-bloque">
                             <button
@@ -125,17 +127,19 @@ const Catalogo = () => {
                         ))}
                     </div>
                 </div>
-                
+
                 <div className="productos-area">
                     <div className="productos-info">
                         <p>
-                            {categoriaActiva === 'todos' 
-                                ? 'Todos los productos' 
-                                : `Categoría: ${categorias.find(c => String(c.id) === String(categoriaActiva))?.categorias || ""}`}
+                            {searchTerm
+                                ? `Resultados de búsqueda para: "${searchTerm}"`
+                                : categoriaActiva === 'todos'
+                                    ? 'Todos los productos'
+                                    : `Categoría: ${categorias.find(c => String(c.id) === String(categoriaActiva))?.categorias || ""}`}
                         </p>
                         <span className="productos-count">{productosFiltrados.length} productos</span>
                     </div>
-                    
+
                     {cargando ? (
                         <div className="cargando">
                             <p>Cargando productos...</p>
@@ -146,11 +150,11 @@ const Catalogo = () => {
                                 productosFiltrados.map(producto => (
                                     <div key={producto.id} className="producto-card">
                                         <div className="producto-imagen">
-                                            <img 
-                                                src={producto.imagen && producto.imagen.startsWith("http") 
-                                                    ? producto.imagen 
-                                                    : `http://127.0.0.1:8000${producto.imagen}`} 
-                                                alt={producto.nombre} 
+                                            <img
+                                                src={producto.imagen && producto.imagen.startsWith("http")
+                                                    ? producto.imagen
+                                                    : `http://127.0.0.1:8000${producto.imagen}`}
+                                                alt={producto.nombre}
                                             />
                                             <span className="producto-categoria">
                                                 {categorias.find(c => String(c.id) === String(producto.categoria))?.categorias || "Sin categoría"}
@@ -158,13 +162,11 @@ const Catalogo = () => {
                                         </div>
                                         <div className="producto-info">
                                             <h3><Link to={`/producto/${producto.id}`}>{producto.nombre}</Link></h3>
-                                            
-                                            {/* Mostrar precio calculado */}
+
                                             <p className="producto-precio">
                                                 ${formatearPrecio(producto.precio_calculado)}
                                             </p>
-                                            
-                                            {/* Mostrar comparación con precio base si es diferente */}
+
                                             {producto.precio_calculado !== producto.precio_base && (
                                                 <p className="precio-base-comparacion">
                                                     Precio base: <span className="tachado">${formatearPrecio(producto.precio_base)}</span>
@@ -172,14 +174,14 @@ const Catalogo = () => {
                                             )}
                                             <p>{producto.descripcion}</p>
                                             <Link to={`/producto/${producto.id}`} className="btn-agregar">
-                                            Lo Quiero
-                                        </Link>
+                                                Lo Quiero
+                                            </Link>
                                         </div>
                                     </div>
                                 ))
                             ) : (
                                 <div className="no-productos">
-                                    <p>No hay productos que coincidan con la categoría seleccionada.</p>
+                                    <p>No hay productos que coincidan con los filtros aplicados.</p>
                                     <button onClick={limpiarFiltros} className="btn-limpiar">Ver todos los productos</button>
                                 </div>
                             )}

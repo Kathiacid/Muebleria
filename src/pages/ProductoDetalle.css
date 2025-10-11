@@ -416,3 +416,15 @@ text-align: center;
 margin-top: 15px;
 font-weight: bold;
 }
+
+.recaptcha-container {
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    }
+
+    .btn-enviar:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
+    }

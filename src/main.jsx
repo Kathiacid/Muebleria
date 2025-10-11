@@ -26,7 +26,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
                     {/* Esta es la nueva ruta específica para ingresar la estatura */}
                     <Route path="/estatura" element={<EstaturaInput />} />
                     
-                    <Route path="/catalogo-completo" element={<Catalogo />} />
+                    <Route path="/catalogo" element={<Catalogo />} />
                     
                     <Route path="/producto/:id" element={<DetalleProducto />} />
 
