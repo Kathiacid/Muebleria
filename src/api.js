@@ -1,21 +1,24 @@
 // src/api.js
 import axios from "axios";
-
+function capitalizarPrimeraLetra(texto) {
+    if (!texto) return '';
+    return texto.charAt(0).toUpperCase() + texto.slice(1);
+    // Eliminé .toLowerCase() para mantener el resto del texto igual
+}
 const BASE_URL = "http://127.0.0.1:8000/api/";
 
-// 👉 Categorías
 export const getCategorias = async () => {
-try {
-const response = await axios.get(`${BASE_URL}categorias/`);
-return response.data.map(cat => ({
-    id: cat.id,
-    categorias: cat.categorias,   // o cat.nombre según tu serializer
-    descripcion: cat.descripcion
-}));
-} catch (error) {
-console.error("Error al obtener categorías:", error);
-return [];
-}
+    try {
+        const response = await axios.get(`${BASE_URL}categorias/`);
+        return response.data.map(cat => ({
+            id: cat.id,
+            categorias: cat.categorias_display,  // ← Usar el campo display
+            descripcion: cat.descripcion
+        }));
+    } catch (error) {
+        console.error("Error al obtener categorías:", error);
+        return [];
+    }
 };
 
 // 👉 Productos
@@ -75,3 +78,19 @@ return null;
 }
 };
 
+export const getProductosDestacados = async () => {
+    try {
+        const response = await axios.get(`${BASE_URL}productos-destacados/`);
+        return response.data.map(item => ({
+            id: item.producto.id,
+            name: item.producto.nombre,
+            price: `$${item.producto.precio}`,
+            description: item.producto.descripcion,
+            image: item.producto.imagen,
+            link: `/producto/${item.producto.slug || item.producto.id}`
+        }));
+    } catch (error) {
+        console.error("Error al obtener productos destacados:", error);
+        return [];
+    }
+};

@@ -133,31 +133,36 @@ if (!recaptchaToken) {
 }
 
 try {
-    await axios.post('http://localhost:8000/api/pedidos/', {
-    producto_id: producto.id,
-    ...formData,
-    recaptcha_token: recaptchaToken, // ✅ Enviar token al backend
-    });
-    
-    setMensaje('✅ Pedido enviado con éxito');
-    setFormData({ 
-    nombre: '', 
-    email: '', 
-    telefono: '',
-    cantidad: 1,
-    ciudad: '',
-    comuna: '',
-    pedido_detallado: ''
-    });
-    resetRecaptcha();
-    setShowForm(false);
+await axios.post('http://localhost:8000/api/solicitudes/', {
+producto: producto.id,                  // 👈 FK correcto
+nombre_cliente: formData.nombre,
+email_cliente: formData.email,
+telefono: formData.telefono,
+detalles: formData.pedido_detallado || 'Sin detalles adicionales', 
+altura: estatura,  // 👈 USA LA ESTATURA DEL CONTEXTO,  // 👈 Agrega esta línea
+recaptcha_token: recaptchaToken,        // ✅ importante
+});
+
+setMensaje('✅ Pedido enviado con éxito');
+setFormData({ 
+nombre: '', 
+email: '', 
+telefono: '',
+cantidad: 1,
+ciudad: '',
+comuna: '',
+pedido_detallado: ''
+});
+resetRecaptcha();
+setShowForm(false);
 } catch (error) {
-    console.error(error);
-    setMensaje('❌ Error al enviar el pedido');
-    resetRecaptcha();
+console.error(error.response?.data || error.message);
+setMensaje('❌ Error al enviar el pedido');
+resetRecaptcha();
 } finally {
-    setLoadingForm(false);
+setLoadingForm(false);
 }
+
 };
 
 if (cargando) {
@@ -302,6 +307,7 @@ return (
             <option value="San Pedro de la Paz">San Pedro de la Paz</option>
             <option value="Hualpén">Hualpén</option>
             </select>
+            
             
             <label>Indicaciones opcionales</label>
             <textarea

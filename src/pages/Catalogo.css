@@ -88,7 +88,16 @@
   padding-top: 15px;
   border-top: 1px solid #e0e0e0;
 }
-
+.producto-nombre a {
+  text-decoration: none;
+  color: #000000;
+  margin-bottom: 0%;
+}
+.producto-precio{
+  font-weight: bold;
+  color: #000000;
+  margin-top: 0%;
+}
 .subcategorias-container h3 {
   margin: 0 0 15px;
   color: #555;
@@ -194,14 +203,21 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 25px;
+  text-align: center;
 }
 
 .producto-card {
-  border: 1px solid #eaeaea;
-  border-radius: 10px;
+  border: 1px solid #cce7d0;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   background: white;
+  width:23%;
+  min-width: 250px;
+  padding:10px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  box-shadow: 20px 20px 30px rgba(0,0,0,0.02);
+  margin: 15px 0;
 }
 
 .producto-card:hover {
@@ -220,6 +236,7 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
+  border-radius: 20px;
 }
 
 .producto-card:hover img {
@@ -227,26 +244,20 @@
 }
 
 .producto-categoria {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background-color: #34B0B0;
-  color: white;
+  color: #555;
   padding: 4px 8px;
   border-radius: 4px;
-  font-size: 0.8rem;
-  text-transform: capitalize;
 }
 
 .producto-info {
   padding: 15px;
+
 }
 
-.producto-card h3 {
-  margin: 0 0 8px;
-  color: #333;
-  font-size: 1.1rem;
+.producto-nombre{
+  text-decoration: none;
 }
+
 
 .producto-subcategoria {
   margin: 0 0 8px;
@@ -255,23 +266,20 @@
   text-transform: capitalize;
 }
 
-.producto-precio {
-  margin: 0 0 15px;
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #2c5530;
-}
 
 .btn-agregar {
-  display: block;
-  width: 100%;
-  padding: 12px;
-  background-color: white;
-  color: #34B1B1;
-  border: 2px solid #34B1B1;
-  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #d1d1d1; /* Verde oscuro que coincide con tus botones */
+  color: rgb(0, 0, 0);
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
   cursor: pointer;
-  font-weight: 600;
 }
 
 .btn-agregar:hover {

@@ -4,6 +4,7 @@ import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { EstaturaContext } from '../components/EstaturaContext';
 import { getProductos, getCategorias, getPrecioAjustado } from "../api";
 import './catalogo.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Catalogo = () => {
     const { estatura } = useContext(EstaturaContext);
@@ -156,25 +157,22 @@ const Catalogo = () => {
                                                     : `http://127.0.0.1:8000${producto.imagen}`}
                                                 alt={producto.nombre}
                                             />
+                                            
+                                        </div>
+                                        <div className="producto-info">
+
                                             <span className="producto-categoria">
                                                 {categorias.find(c => String(c.id) === String(producto.categoria))?.categorias || "Sin categoría"}
                                             </span>
-                                        </div>
-                                        <div className="producto-info">
-                                            <h3><Link to={`/producto/${producto.id}`}>{producto.nombre}</Link></h3>
+                                            
+                                            <h3 className='producto-nombre'><Link to={`/producto/${producto.id}`}>{producto.nombre}</Link></h3>
 
                                             <p className="producto-precio">
                                                 ${formatearPrecio(producto.precio_calculado)}
                                             </p>
 
-                                            {producto.precio_calculado !== producto.precio_base && (
-                                                <p className="precio-base-comparacion">
-                                                    Precio base: <span className="tachado">${formatearPrecio(producto.precio_base)}</span>
-                                                </p>
-                                            )}
-                                            <p>{producto.descripcion}</p>
                                             <Link to={`/producto/${producto.id}`} className="btn-agregar">
-                                                Lo Quiero
+                                            <i className="fa-solid fa-cart-shopping"></i> {/* Nueva sintaxis */}
                                             </Link>
                                         </div>
                                     </div>
