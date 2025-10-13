@@ -41,45 +41,30 @@ const AutoBanner = ({ banners, autoPlayInterval = 5000 }) => {
   }, [autoPlayInterval, banners.length]);
 
   return (
-    <div className="auto-banner">
-      <div
-        className="banner-container"
-        style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-      >
-        {banners.map((banner, index) => (
-          <div
-            key={index}
-            className="banner-slide"
-            style={{ backgroundImage: `url(${banner.image})` }}
-          >
-            <div className="banner-overlay"></div>
-            <div className="banner-content">
-              <h2>{banner.title}</h2>
-              <p>{banner.description}</p>
-              {banner.buttonText && (
-                <button className="banner-cta">{banner.buttonText}</button>
-              )}
+    <div className="banner-main-container"> {/* ← Nuevo contenedor */}
+      <div className="auto-banner">
+        <div
+          className="banner-container"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {banners.map((banner, index) => (
+            <div
+              key={index}
+              className="banner-slide"
+              style={{ backgroundImage: `url(${banner.image})` }}
+            >
+              
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
 
-      <button className="nav-button prev-button" onClick={prevBanner}>
-        &#10094;
-      </button>
+        <button className="nav-button prev-button" onClick={prevBanner}>
+          &#10094;
+        </button>
 
-      <button className="nav-button next-button" onClick={nextBanner}>
-        &#10095;
-      </button>
-
-      <div className="banner-indicators">
-        {banners.map((_, index) => (
-          <button
-            key={index}
-            className={`indicator ${index === currentIndex ? "active" : ""}`}
-            onClick={() => goToBanner(index)}
-          />
-        ))}
+        <button className="nav-button next-button" onClick={nextBanner}>
+          &#10095;
+        </button>
       </div>
     </div>
   );

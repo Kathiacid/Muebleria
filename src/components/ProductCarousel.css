@@ -1,6 +1,7 @@
 .product-carousel-container {
 
 max-width: 1200px;
+
 margin: 0 auto;
 position: relative;
 overflow: hidden;
@@ -11,6 +12,9 @@ padding: 20px 0;
 overflow: hidden;
 position: relative;
 margin-bottom: 20px;
+padding: 20px;
+
+height: 450px;
 
 }
 
@@ -18,28 +22,36 @@ margin-bottom: 20px;
 display: flex;
 transition: transform 0.5s ease;
 width: 100%;
+gap:25px;
 }
 
 .product-card {
-flex: 0 0 calc(33.333% - 20px);
-margin: 0 10px;
-background: white;
-border-radius: 10px;
-overflow: hidden;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-transition: transform 0.3s ease, box-shadow 0.3s ease;
-margin-bottom: 20px;
+background: #fafafa;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+    width: 300px;
 }
 
 .product-card:hover {
-transform: translateY(-5px);
-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    transform: translateY(-7px);
+    box-shadow: 0 8px 20px rgba(255,51,102,0.15);
 }
 
 .product-image-container {
 width: 100%;
 height: 200px;
 overflow: hidden;
+}
+.product-image-container img{
+
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    flex-shrink: 0;
 }
 
 .product-image {
@@ -55,29 +67,46 @@ transform: scale(1.05);
 
 .product-info {
 padding: 15px;
+
 }
 
+.product-info a{
+    margin: 0 0 10px 0;
+    font-weight: 600;
+    color: #222;
+    
+}
+
+.product-description{
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Número de líneas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .product-name {
 margin-bottom: 10px;
 font-size: 16px;
 }
 
 .product-name a {
-color: #2c3e50;
-text-decoration: none;
-transition: color 0.2s ease;
+    margin: 0 0 10px 0;
+    font-weight: 600;
+    color: #222;
+    text-decoration: none;
 }
 
 .product-name a:hover {
-color: #34b1b1;
-text-decoration: underline;
+color: #ff6b6b;
+
 }
 
 .product-price {
-color: #34b1b1;
+color: #ff6b6b;
 font-weight: bold;
 font-size: 18px;
 margin-bottom: 8px;
+font-weight: bold;
 }
 
 .product-description {

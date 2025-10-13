@@ -1,153 +1,260 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
+/* Navbar.css - VERSIÓN CORREGIDA */
+:root {
+/* Variables esenciales */
+--onyx: #333333;
+--salmon-pink: #ff6b6b;
+--cultured: #f8f9fa;
+--white: #ffffff;
+--fs-7: 14px;
+--weight-600: 600;
+--transition-timing: 0.3s ease;
+--border-radius-medium: 8px;
+}
 
-.navbar-mainbg {
-background-color: #34b1b1;
+/* Reset básico */
+.header-main {
+padding: 15px 0;
+border-bottom: 1px solid #e0e0e0;
+background: var(--white);
+width: 100%;
+}
+
+.header-main .container {
 display: flex;
-align-items: center;
 justify-content: space-between;
-padding: 0 20px;
-height: 85px;
-position: relative;
-z-index: 2;
-margin-bottom: 30px;
-}
-
-.navbar-logo {
-color: #fff;
-font-size: 18px;
-font-weight: 500;
-}
-
-.navbar-nav {
-display: flex;
 align-items: center;
-list-style: none;
-position: relative;
+gap: 30px;
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 20px;
+}
+
+.header-logo {
+text-decoration: none;
+font-size: 1.5rem;
+font-weight: bold;
+color: var(--onyx);
+}
+
+/* NAVEGACIÓN PRINCIPAL - ESTILOS CORREGIDOS */
+.desktop-navigation-menu {
+display: flex;
+flex-grow: 1;
+justify-content: center;
+}
+
+.desktop-menu-category-list {
+display: flex;
+justify-content: center;
+align-items: center;
+gap: 40px;
 margin: 0;
 padding: 0;
-height: 100%;
+list-style: none;
 }
 
-.navbar-nav li {
+.menu-category {
 position: relative;
-height: 100%;
-display: flex;
-align-items: center;
 }
 
-.navbar-nav li a,
-.navbar-nav li span {
-color: rgba(255, 255, 255, 0.7);
+/* ESTILOS DEL LINK - CORREGIDOS */
+.menu-title {
+position: relative;
+color: var(--onyx);
+font-size: var(--fs-7);
+font-weight: var(--weight-600);
+text-transform: uppercase;
+padding: 10px 0;
+transition: color var(--transition-timing);
 text-decoration: none;
-padding: 0 20px;
-font-size: 15px;
-display: flex;
-align-items: center;
-height: 100%;
+display: block;
 cursor: pointer;
-transition: color 0.3s ease;
-z-index: 2;
+overflow: hidden;
 }
 
-.navbar-nav li.active a,
-.navbar-nav li.active span {
-color: #34b1b1;
+.menu-title:hover {
+color: var(--salmon-pink);
 }
 
-/* ---------- Selector animado con curvas inferiores ---------- */
-.hori-selector {
+/* EFECTO DE SUBRAYADO - ESTO ES LO QUE FUNCIONA */
+.underline-right {
 position: absolute;
-background-color: #F1F1F1;
-top: 0;
+bottom: 0;
+right: 0;
+width: 0;
+height: 2px;
+background: var(--salmon-pink);
+transition: width 0.3s ease;
+display: block !important; /* Asegurar que se muestre */
+}
+
+/* Al hacer hover: aparece desde la derecha */
+.menu-title:hover .underline-right {
+width: 100%;
+right: auto;
 left: 0;
-border-top-left-radius: 15px;
-border-top-right-radius: 15px;
-height: 100%;
-transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-z-index: 1;
-
 }
 
-/* los “bloques” laterales */
-.hori-selector .left,
-.hori-selector .right {
+/* Estado activo: subrayado permanente */
+.menu-category.active .menu-title {
+color: var(--salmon-pink);
+}
+
+.menu-category.active .underline-right {
+width: 100%;
+right: auto;
+left: 0;
+}
+
+/* Texto del nav */
+.nav-text {
+position: relative;
+z-index: 2;
+display: inline-block;
+}
+
+/* DROPDOWN - ESTILOS MEJORADOS */
+.dropdown-panel {
 position: absolute;
-width: 25px;
-height: 25px;
-background-color: #fff;
-bottom: 0px;
-z-index: 0;
+top: 100%;
+left: 50%;
+transform: translateX(-50%) translateY(10px);
+background: var(--white);
+width: 600px;
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 20px;
+padding: 25px;
+border: 1px solid var(--cultured);
+box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+border-radius: var(--border-radius-medium);
+opacity: 0;
+visibility: hidden;
+pointer-events: none;
+transition: all 0.3s ease;
+z-index: 1000;
+}
+
+.menu-category:hover .dropdown-panel {
+opacity: 1;
+visibility: visible;
+pointer-events: all;
+transform: translateX(-50%) translateY(0);
+}
+
+.dropdown-panel-list {
+display: flex;
+flex-direction: column;
+}
+
+.dropdown-panel-list .menu-title {
+margin-bottom: 10px;
+padding-bottom: 8px;
+border-bottom: 1px solid var(--cultured);
+}
+
+.dropdown-panel-list .menu-title a {
+color: var(--onyx);
+font-size: var(--fs-7);
+font-weight: var(--weight-600);
+text-decoration: none;
 display: block;
 }
 
-/* posiciones */
-.hori-selector .left {
-left: -25px;
-background-color: #F1F1F1;
-
+.panel-list-item {
+margin-bottom: 5px;
 }
 
-.hori-selector .right {
-right: -25px;
-background-color: #F1F1F1;
+.panel-list-item a {
+color: #666;
+font-size: 13px;
+text-transform: capitalize;
+transition: color 0.2s ease;
+text-decoration: none;
+display: block;
+padding: 4px 0;
 }
 
-/* los círculos que forman las curvas */
-.hori-selector .left::before,
-.hori-selector .right::before {
-content: "";
+.panel-list-item a:hover {
+color: var(--salmon-pink);
+}
+
+/* BUSCADOR - ESTILOS FUNCIONALES */
+/* Buscador con lupa integrada */
+.header-search-container {
+position: relative;
+min-width: 250px;
+}
+
+.search-field {
+width: 100%;
+padding: 10px 45px 10px 15px; /* Más padding a la derecha para la lupa */
+border: 1px solid #ddd;
+border-radius: var(--border-radius-medium);
+font-size: 14px;
+outline: none;
+transition: border-color 0.3s ease;
+background: var(--white);
+}
+
+.search-field:focus {
+border-color: var(--salmon-pink);
+}
+
+/* Lupa dentro del campo */
+.search-btn {
 position: absolute;
-width: 50px;
-height: 50px;
-border-radius: 50%;
-background-color: #34b1b1; /* color del fondo del navbar */
-}
-
-/* curva izquierda */
-.hori-selector .left::before {
-bottom: 0;
-left: -25px;
-}
-
-/* curva derecha */
-.hori-selector .right::before {
-bottom: 0;
-right: -25px;
-}
-
-
-/* Buscador */
-.buscador input {
-padding: 5px 10px;
+top: 50%;
+right: 10px;
+transform: translateY(-50%);
+background: none;
 border: none;
-border-radius: 5px;
+font-size: 16px;
+color: #666;
+cursor: pointer;
+padding: 5px;
+transition: color 0.2s ease;
+z-index: 2;
 }
 
-/* ---------- Dropdown funcional ---------- */
-.dropdown-menu {
-position: absolute;
-top: 80%;
-left: 0;
-background: #F1F1F1;
-border-radius: 8px;
-padding: 10px 0;
-display: none;
-flex-direction: column;
-min-width: 160px;
-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-z-index: 10; /* más alto que el hori-selector */
-color:#34b1b1;
-
-
+.search-btn:hover {
+color: var(--salmon-pink);
 }
-
-.dropdown-menu.show {
+/* ICONOS DE USUARIO */
+.header-user-actions {
 display: flex;
-
+align-items: center;
+gap: 15px;
 }
 
-
-
-.dropdown-menu span:hover {
-background-color: rgba(81, 97, 206, 0.1);
+.action-btn {
+position: relative;
+background: none;
+border: none;
+font-size: 20px;
+color: var(--onyx);
+cursor: pointer;
+padding: 5px;
+transition: color 0.2s ease;
 }
+
+.action-btn:hover {
+color: var(--salmon-pink);
+}
+
+.count {
+position: absolute;
+top: -5px;
+right: -5px;
+background: red;
+color: white;
+font-size: 11px;
+font-weight: 600;
+min-width: 16px;
+height: 16px;
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+

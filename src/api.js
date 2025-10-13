@@ -82,12 +82,13 @@ export const getProductosDestacados = async () => {
     try {
         const response = await axios.get(`${BASE_URL}productos-destacados/`);
         return response.data.map(item => ({
-            id: item.producto.id,
-            name: item.producto.nombre,
-            price: `$${item.producto.precio}`,
-            description: item.producto.descripcion,
-            image: item.producto.imagen,
-            link: `/producto/${item.producto.slug || item.producto.id}`
+            id: item.id,
+            producto: item.producto,
+            producto_nombre: item.producto_nombre,
+            producto_descripcion: item.producto_descripcion, // ← ¡AHORA SÍ EXISTE!
+            producto_precio: item.producto_precio,
+            producto_imagen: item.producto_imagen,
+            producto_tipo_mueble_display: item.producto_tipo_mueble_display,
         }));
     } catch (error) {
         console.error("Error al obtener productos destacados:", error);

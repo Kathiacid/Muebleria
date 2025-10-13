@@ -1,8 +1,8 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState, useContext, useEffect, useRef } from "react";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { EstaturaContext } from "./EstaturaContext";
 import "./Navbar.css";
-
 export default function Navbar() {
 const { estatura } = useContext(EstaturaContext);
 const [busqueda, setBusqueda] = useState("");
@@ -11,33 +11,7 @@ const navigate = useNavigate();
 const location = useLocation();
 
 const navRef = useRef(null);
-const selectorRef = useRef(null);
-
-// 📍 Función para mover el selector
-const moverSelector = () => {
-const activeItem = navRef.current?.querySelector(".active");
-const selector = selectorRef.current;
-
-if (activeItem && selector) {
-    const { left, top, width, height } = activeItem.getBoundingClientRect();
-    const parentRect = navRef.current.getBoundingClientRect();
-
-    selector.style.left = `${left - parentRect.left}px`;
-    selector.style.top = `${top - parentRect.top}px`;
-    selector.style.width = `${width}px`;
-    selector.style.height = `${height}px`;
-}
-};
-
-// Mover el selector cuando cambia la ruta o tamaño de ventana
-useEffect(() => {
-const timeout = setTimeout(moverSelector, 50);
-window.addEventListener("resize", moverSelector);
-return () => {
-    clearTimeout(timeout);
-    window.removeEventListener("resize", moverSelector);
-};
-}, [location.pathname]);
+const catalogRef = useRef(null);
 
 const manejarSubmit = (e) => {
 e.preventDefault();
@@ -64,63 +38,165 @@ if (categoria === "todos") {
 }
 };
 
+// Cerrar dropdown al hacer click fuera
+useEffect(() => {
+const handleClickOutside = (event) => {
+    if (catalogRef.current && !catalogRef.current.contains(event.target)) {
+    setIsCatalogOpen(false);
+    }
+};
+
+document.addEventListener("mousedown", handleClickOutside);
+return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+};
+}, []);
+
+// Determinar si un item está activo
+const isItemActive = (path) => {
+if (path === "/catalogo") {
+    return location.pathname.includes("catalogo");
+}
+return location.pathname === path;
+};
+
 return (
-<nav className="navbar-mainbg">
-    <Link to="/" className="navbar-logo">
-    SOMA
-    </Link>
+<header className="header">
+    <div className="header-main">
+    <div className="container">
+        {/* Logo */}
+        <Link to="/" className="header-logo">
+        {/*<img src="/logo.png" alt="SOMA logo" width="120" height="40" />*/}
+        <h2>SOMA</h2>
+        </Link>
 
-    <ul className="navbar-nav" ref={navRef}>
-    {/* El selector animado */}
-    <div className="hori-selector" ref={selectorRef}>
-        <div className="left"></div>
-        <div className="right"></div>
+        {/* Navegación Desktop */}
+        <nav className="desktop-navigation-menu">
+        <ul className="desktop-menu-category-list" ref={navRef}>
+            <li className={`menu-category ${isItemActive("/") ? "active" : ""}`}>
+            
+            <Link to="/" className="menu-title">
+                <span className="nav-text">Inicio</span>
+                <span className="underline-right"></span>
+            </Link>
+            </li>
+
+            <li 
+            className={`menu-category ${isItemActive("/catalogo") ? "active" : ""}`}
+            ref={catalogRef}
+            onMouseEnter={() => setIsCatalogOpen(true)}
+            onMouseLeave={() => setIsCatalogOpen(false)}
+            >
+            <span className="menu-title catalog-trigger">
+                <Link to="/catalogo" className="menu-title" onClick={() => navegarACatalogo("todos")}>
+                <span className="nav-text">Catalogo</span>
+                <span className="underline-right"></span>
+                </Link>
+            </span>
+            
+            {/* Dropdown Panel */}
+            <div className={`dropdown-panel ${isCatalogOpen ? "active" : ""}`}>
+                <div className="dropdown-panel-list">
+                <div className="menu-title">
+                    <Link to="/catalogo" onClick={() => navegarACatalogo("todos")}>
+                    Categorias principales
+                    </Link>
+                </div>
+
+                <div className="panel-list-item">
+                    <Link to="/catalogo?categoria=5" onClick={() => navegarACatalogo("cocina")}>
+                    Cocina
+                    </Link>
+                </div>
+
+                <div className="panel-list-item">
+                    <Link to="/catalogo?categoria=6" onClick={() => navegarACatalogo("baño")}>
+                    Baño
+                    </Link>
+                </div>
+                
+                <div className="panel-list-item">
+                    <Link to="/catalogo?categoria=6" onClick={() => navegarACatalogo("habitacion")}>
+                    Habitación
+                    </Link>
+                </div>
+
+                <div className="panel-list-item">
+                    <Link to="/catalogo?categoria=11" onClick={() => navegarACatalogo("livingcomedor")}>
+                    Living & Comedor
+                    </Link>
+                </div>
+
+                </div>
+
+                <div className="dropdown-panel-list">
+                <div className="menu-title">
+                    <Link to="/catalogo" onClick={() => navegarACatalogo("todos")}>
+                    Otras Categorias
+                    </Link>
+                </div>
+                <div className="panel-list-item">
+                    <Link to="/catalogo?categoria=7" onClick={() => navegarACatalogo("exterior")}>
+                    Exterior
+                    </Link>
+                </div>
+                
+                <div className="panel-list-item">
+                    <Link to="/catalogo?categoria=9" onClick={() => navegarACatalogo("taller")}>
+                    Taller
+                    </Link>
+                </div>
+
+                </div>
+
+                <div className="dropdown-panel-list">
+                <div className="menu-title">
+                    <a>Te podría interesar</a>
+                </div>
+                <div className="panel-list-item">
+                    <a>
+                    <Link to="/catalogo" onClick={() => navegarACatalogo("todos")}>
+                    Ofertas
+                    </Link>
+                    </a>
+                </div>
+                </div>
+            </div>
+            </li>
+
+            <li className={`menu-category ${isItemActive("/sobrenosotros") ? "active" : ""}`}>
+            <Link to="/sobrenosotros" className="menu-title">
+                <span className="nav-text">Sobre Nosotros</span>
+                <span className="underline-right"></span>
+            </Link>
+            </li>
+        </ul>
+        </nav>
+
+        {/* Buscador */}
+        <div className="header-search-container">
+        <form onSubmit={manejarSubmit}>
+            <input 
+            type="text" 
+            className="search-field" 
+            placeholder="Buscar productos..."
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            />
+            <button type="submit" className="search-btn">
+            <i className="fas fa-search"></i>
+            </button>
+        </form>
+        </div>
+
+        {/* Acciones de usuario */}
+        <div className="altura-navbar">
+            <i class="fas fa-ruler-vertical"></i>
+        <strong className="estatura-resaltada">{estatura}m</strong>
+        </div>
+        
     </div>
-
-    <li className={location.pathname === "/" ? "active" : ""}>
-        <Link to="/">Inicio</Link>
-    </li>
-<li
-className={`catalog-item ${
-location.pathname.includes("catalogo") ? "active" : ""
-}`}
-onMouseEnter={() => setIsCatalogOpen(true)}
-onMouseLeave={() => setIsCatalogOpen(false)}
->
-<span
-className="catalog-trigger"
-onClick={() => navegarACatalogo("todos")}
->
-Catálogo
-</span>
-
-<div
-className={`dropdown-menu ${isCatalogOpen ? "show" : ""}`}
-onMouseEnter={() => setIsCatalogOpen(true)}
-onMouseLeave={() => setIsCatalogOpen(false)}
->
-<span onClick={() => navegarACatalogo("baño")}>Baño</span>
-<span onClick={() => navegarACatalogo("cocina")}>Cocina</span>
-<span onClick={() => navegarACatalogo("habitacion")}>Habitación</span>
-<span onClick={() => navegarACatalogo("livingcomedor")}>Living & Comedor</span>
-<span onClick={() => navegarACatalogo("taller")}>Taller</span>
-</div>
-</li>
-
-
-    <li className={location.pathname === "/sobrenosotros" ? "active" : ""}>
-        <Link to="/sobrenosotros">Sobre Nosotros</Link>
-    </li>
-    </ul>
-
-    <form onSubmit={manejarSubmit} className="buscador">
-    <input
-        type="text"
-        placeholder="Buscar..."
-        value={busqueda}
-        onChange={(e) => setBusqueda(e.target.value)}
-    />
-    </form>
-</nav>
+    </div>
+</header>
 );
 }
