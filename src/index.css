@@ -50,8 +50,8 @@ button {
 
 /* Footer */
 footer {
-  background: #1f2937;
-  color: white;
+  background: #e9e9e9;
+  color: rgb(0, 0, 0);
   padding: 30px 20px;
   display: flex;
   flex-wrap: wrap;
@@ -60,7 +60,7 @@ footer {
 }
 
 footer h2 {
-  color: #34b1b1;
+  color: rgb(184, 117, 117);
   margin-bottom: 10px;
 }
 
@@ -70,15 +70,18 @@ footer h2 {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  align-items: flex-start;
+  align-items: center;
 }
 
+.item span{
+  text-align: center;
+}
 footer a {
-  color: white;
+  color: rgb(184, 117, 117);
   transition: color 0.3s ease;
 }
 footer a:hover {
-  color: #34b1b1;
+  color: #993629;
 }
 
 /* Responsive footer */

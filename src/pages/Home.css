@@ -1,100 +1,118 @@
-* {
-padding: 0;
-margin: 0;
-box-sizing: border-box;
-font-family: "Montserrat", sans-serif;
-}
+      * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Montserrat", sans-serif;
+        }
 
-.banner {
-width: 100%;
-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+        :root {
+            --salmon-pink: #ff6b6b;
+        }
 
-/* Grid principal */
-.grid {
-background-color: white;
-display: grid;
-grid-template-columns: 1fr 1fr;
-grid-template-rows: auto auto;
-gap: 20px;
-width: 100%;
-padding: 40px;
-}
+        .banner {
+            width: 100%;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
-/* Bloques */
-.texto1,
-.texto2,
-.img1,
-.img2 {
-width: 100%;
-justify-content: center;
-padding: 40px;
-align-items: center;
-display: flex;
-background: #fff;
-border-radius: 12px;
+        /* Grid principal */
+        .grid {
+            background-color: white;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto;
+            gap: 20px;
+            width: 100%;
+            padding: 40px;
+        }
 
-}
+        /* Bloques */
+        .texto1,
+        .img1 {
+            width: 100%;
+            padding: 40px;
+            align-items: center;
+            display: flex;
+            background: #fff;
+            border-radius: 12px;
+            flex-direction: column;
+            text-align: center;
+        }
 
-.texto1:hover,
-.texto2:hover,
-.img1:hover,
-.img2:hover {
-transform: translateY(-5px);
+        .texto1:hover,
+        .texto2:hover,
+        .img1:hover,
+        .img2:hover {
+            transform: translateY(-5px);
+        }
 
-}
+        .texto1 h2 {
+            font-size: 5rem;
 
-.texto1,
-.texto2 {
-flex-direction: column;
-text-align: center;
-}
+        }
 
-/* Imágenes */
-.imagen1,
-.imagen2 {
-width: 600px;
-border-radius: 10px;
-transition: transform 0.4s ease, filter 0.4s ease;
-cursor: pointer;
-}
+        .texto1 p {
+            font-style: italic;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 2rem;
+        }
 
-.imagen1:hover,
-.imagen2:hover {
-transform: scale(1.05);
-filter: brightness(1.1);
-}
+        /* Imágenes */
+        .imagen1,
+        .imagen2 {
+            width: 600px;
+            border-radius: 10px;
+            transition: transform 0.4s ease, filter 0.4s ease;
+            cursor: pointer;
+        }
 
-/* Texto */
+        .imagen1:hover,
+        .imagen2:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
 
+        /* Botones con efecto subrayado */
+        .mi-boton {
+            position: relative;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 10px 0;
+            transition: color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            overflow: hidden;
+            background: none;
+            border: none;
+            margin-top: 20px;
+        }
 
-p {
-margin-top: 15px;
-color: #555;
-line-height: 1.5;
-font-size: 1rem;
-}
+        .mi-boton:hover {
+            color: var(--salmon-pink);
+        }
 
-/* Botones */
-.mi-boton {
-padding: 12px 20px;
-border: 2px solid #34b1b1;
-margin-top: 20px;
-color: #34b1b1;
-text-decoration: none;
-border-radius: 8px;
-font-weight: bold;
-transition: all 0.3s ease;
-}
+        .underline-right {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--salmon-pink);
+            transition: width 0.3s ease;
+            display: block !important;
+        }
 
-.mi-boton:hover {
-background: #34b1b1;
-color: #fff;
-transform: scale(1.05);
-box-shadow: 0 4px 12px rgba(52, 177, 177, 0.3);
-}
-.title{
-    text-align: center;
-    margin: 20px;
-}
-
+        /* Al hacer hover: aparece desde la derecha */
+        .mi-boton:hover .underline-right {
+            width: 100%;
+            right: auto;
+            left: 0;
+        }
+    .carousel{
+        justify-items: center;
+    }
+    .carousel h2{
+        font-size: 2rem;
+    }
