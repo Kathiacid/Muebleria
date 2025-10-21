@@ -1,12 +1,14 @@
 // src/pages/EstaturaInput.jsx
 
 import { useContext, useState } from "react";
-import { EstaturaContext } from "../components/EstaturaContext";
+// ⚠️ Importamos resetEstatura del contexto
+import { EstaturaContext } from "../components/EstaturaContext"; 
 import { useNavigate } from "react-router-dom";
 import "./estaturaInput.css";
 
 const EstaturaInput = () => {
-    const { setEstatura } = useContext(EstaturaContext);
+    // ⚠️ Importamos setEstatura, estatura (para saber si existe), y resetEstatura
+    const { estatura, setEstatura, resetEstatura } = useContext(EstaturaContext);
     const [valorEstatura, setValorEstatura] = useState("");
     const [warning, setWarning] = useState("");
     const navigate = useNavigate();
@@ -54,6 +56,12 @@ const EstaturaInput = () => {
         navigate("/catalogo");
     };
 
+    // Función que llama a resetEstatura y redirige a Home
+    const handleReset = () => {
+        resetEstatura();
+        navigate("/"); // Redirige a Home después de resetear para mayor claridad
+    };
+
     return (
         <div className="container-estatura">
             <div className="card-estatura">
@@ -77,6 +85,21 @@ const EstaturaInput = () => {
                 {warning && <p className="warning-text">{warning}</p>}
 
                 <button onClick={handleGuardar}>Guardar y ver catálogo</button>
+
+                {/* ------------------------------------------- */}
+                {/* 🆕 BOTÓN PARA ELIMINAR ESTATURA (TEST) */}
+                {/* Solo se muestra si ya hay una estatura registrada */}
+                {estatura && (
+                    <button 
+                        onClick={handleReset} 
+                        className="reset-button"
+                        style={{ marginTop: '15px', backgroundColor: '#dc3545', color: 'white', border: 'none', cursor: 'pointer' }}
+                    >
+                        Resetear/Eliminar Estatura ({estatura}m)
+                    </button>
+                )}
+                {/* ------------------------------------------- */}
+
             </div>
         </div>
     );
