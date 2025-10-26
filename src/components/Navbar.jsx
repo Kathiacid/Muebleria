@@ -118,29 +118,29 @@ export default function Navbar() {
                                     {/* COLUMNA 1 */}
                                     <div className="dropdown-panel-list">
                                         <div className="menu-title">
-                                            <span onClick={() => navegarACatalogo("todos")}>
+                                            <span >
                                                 Categorias principales
                                             </span>
                                         </div>
 
                                         {/* Ítems: Cambiados a <span> con onClick */}
                                         <div className="panel-list-item">
-                                            <span onClick={() => navegarACatalogo("cocina")}>
+                                            <span onClick={() => navegarACatalogo("5")}>
                                                 Cocina
                                             </span>
                                         </div>
                                         <div className="panel-list-item">
-                                            <span onClick={() => navegarACatalogo("baño")}>
+                                            <span onClick={() => navegarACatalogo("6")}>
                                                 Baño
                                             </span>
                                         </div>
                                         <div className="panel-list-item">
-                                            <span onClick={() => navegarACatalogo("habitacion")}>
+                                            <span onClick={() => navegarACatalogo("10")}>
                                                 Habitación
                                             </span>
                                         </div>
                                         <div className="panel-list-item">
-                                            <span onClick={() => navegarACatalogo("livingcomedor")}>
+                                            <span onClick={() => navegarACatalogo("11")}>
                                                 Living & Comedor
                                             </span>
                                         </div>
@@ -149,25 +149,23 @@ export default function Navbar() {
                                     {/* COLUMNA 2 */}
                                     <div className="dropdown-panel-list">
                                         <div className="menu-title">
-                                            <span onClick={() => navegarACatalogo("todos")}>
+                                            <span >
                                                 Otras Categorias
                                             </span>
                                         </div>
                                         
                                         <div className="panel-list-item">
-                                            <span onClick={() => navegarACatalogo("exterior")}>
+                                            <span onClick={() => navegarACatalogo("7")}>
                                                 Exterior
                                             </span>
                                         </div>
                                         
                                         <div className="panel-list-item">
-                                            <span onClick={() => navegarACatalogo("taller")}>
+                                            <span onClick={() => navegarACatalogo("9")}>
                                                 Taller
                                             </span>
                                         </div>
-
                                     </div>
-
                                     {/* COLUMNA 3 */}
                                     <div className="dropdown-panel-list">
                                         <div className="menu-title">

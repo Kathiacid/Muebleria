@@ -1,68 +1,291 @@
-/* src/pages/estaturaInput.css */
-
-.container-estatura {
+/* ------------------- Estilos Base del Contenedor ------------------- */
+.soma-container-full {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+    /* Fondo Blanco: El cambio principal */
+    background-color: #FFFFFF; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Efecto de Fondo Sutilmente Futurista */
+.futuristic-background-soma {
+    /* Gradiente sutil en tonos de blanco/gris claro para profundidad */
+    background: radial-gradient(circle at center, #fcfcfc 0%, #e8e8e8 100%);
+}
+
+/* ------------------- Estilos de la Tarjeta Principal ------------------- */
+.card-soma-input {
+    /* Fondo casi blanco transparente */
+    background: rgba(255, 255, 255, 0.9);
+    /* Borde sutil y sombra de vidrio */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(200, 200, 200, 0.5);
+    border-radius: 20px;
+    padding: 40px 30px;
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+    /* Sombra de acento Rojo */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1), 0 0 30px rgba(255, 107, 107, 0.2); 
+    transition: all 0.7s ease-in-out; 
+}
+
+/* ------------------- Títulos y Textos ------------------- */
+.title-soma-glow {
+    font-size: 2.2em;
+    font-weight: 300;
+    /* Texto Oscuro para contraste con fondo blanco */
+    color: #333333; 
+    margin-bottom: 10px;
+    /* Resplandor Rojo Suave */
+    text-shadow: 0 0 3px rgba(255, 107, 107, 0.5);
+}
+
+.logo-text-soma {
+    font-weight: 700;
+    /* Color de acento Rojo */
+    color: #FF6B6B;
+}
+
+.subtitle-soma-welcome {
+    /* Texto Oscuro para contraste */
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 1.1em;
+    font-weight: 300;
+}
+
+.warning-text-soma {
+    color: #d90000; /* Rojo fuerte para advertencias */
+    font-size: 0.9em;
+    margin-top: 10px;
+    min-height: 1.2em;
+}
+
+/* ------------------- Input de Estatura ------------------- */
+.stature-input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.stature-input-field {
+    padding: 15px 50px 15px 20px; 
+    font-size: 1.4em;
+    width: 100%;
+    max-width: 200px;
+    /* Borde discreto */
+    border: 2px solid #DDDDDD; 
+    border-radius: 10px;
+    /* Fondo blanco y texto oscuro por defecto */
+    background-color: #FFFFFF;
+    color: #333; 
+    text-align: left;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+/* Ocultar flechas de input de número en navegadores */
+.stature-input-field::-webkit-outer-spin-button,
+.stature-input-field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Efecto de glow al enfocar */
+.stature-input-field:focus, .focused-glow {
+    /* Borde y sombra en rojo */
+    border-color: #FF6B6B;
+    box-shadow: 0 0 10px rgba(255, 107, 107, 0.8), 0 0 5px #FF6B6B;
+}
+
+.input-unit {
+    position: absolute;
+    right: 110px; 
+    /* Color de acento Rojo */
+    color: #FF6B6B;
+    font-weight: 600;
+    font-size: 0.9em;
+    pointer-events: none;
+}
+
+/* ------------------- Botones ------------------- */
+.button-enter-soma {
+    /* Fondo del botón en color de acento o secundario SOMA */
+    background-color: #c03d3d; 
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 300px;
+    letter-spacing: 1px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 80vh;
-    text-align: center;
-    padding: 2rem;
-    background-color: #f8f8f8;
-    color: #333;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.card-estatura {
-    background-color: #ffffff;
-    padding: 2.5rem;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    max-width: 450px;
-    width: 100%;
-}
-
-.card-estatura h1 {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    color: #444;
-}
-
-.card-estatura p {
-    font-size: 1.2rem;
-    margin-bottom: 2rem;
-    color: #666;
-}
-
-.card-estatura input[type="number"] {
-    padding: 0.75rem;
-    font-size: 1rem;
-    width: 100%;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.card-estatura input[type="number"]:focus {
-    border-color: #34B1B1;
-    outline: none;
-    box-shadow: 0 0 5px #2b7777;
-}
-
-.card-estatura button {
-    padding: 0.75rem;
-    font-size: 1rem;
-    font-weight: bold;
-    color: #fff;
-    background-color: #34B1B1;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.card-estatura button:hover {
-    background-color: #8cd4d4;
+.button-enter-soma:hover {
+    /* Hover Rojo con glow */
+    background-color: #FF6B6B;
+    color: white;
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.8);
     transform: translateY(-2px);
+}
+
+.button-enter-soma:disabled {
+    background-color: #ccc;
+    color: #888;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.icon-portal {
+    margin-left: 10px;
+    font-size: 1.2em;
+    transition: transform 0.3s;
+    display: inline-block;
+}
+
+.button-enter-soma:hover .icon-portal {
+    transform: translateX(5px) scale(1.1);
+}
+
+.reset-button-soma {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 0.9em;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.reset-button-soma:hover {
+    /* Color de acento Rojo */
+    color: #FF6B6B;
+}
+
+
+/* ------------------- ANIMACIONES DE ENTRADA ------------------- */
+/* (Las animaciones se mantienen, solo el color de los elementos cambió) */
+
+.fade-in-soma {
+    opacity: 0;
+    transform: scale(0.9);
+    animation: fadeInSoma 1s ease-out forwards;
+}
+
+.live-visualizer-area {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end; /* Alinea los elementos al suelo */
+    height: 150px; /* Altura del área de visualización */
+    position: relative;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+}
+
+.reference-line {
+    /* Simula el suelo o una regla */
+    position: absolute;
+    bottom: 0;
+    left: 15%; 
+    right: 15%; 
+    height: 2px;
+    background: #FF6B6B; /* Rojo de acento */
+    box-shadow: 0 0 5px #FF6B6B;
+}
+
+.live-avatar {
+    /* Contenedor que recibe el transform: scaleY(...) de JavaScript */
+    color: #FF6B6B; /* Rojo de acento */
+    margin-right: 30px;
+    z-index: 10;
+    
+    /* Configuración clave para la escala */
+    transform-origin: bottom; /* Asegura que se escale desde el suelo */
+    transition: transform 0.2s ease-out; /* Transición suave de escala */
+}
+
+/* 🚨 CORRECCIÓN CLAVE: Usamos font-size para agrandar el emoji */
+.live-avatar span {
+    font-size: 60px; /* Tamaño GRANDE, ajusta a tu gusto */
+    /* Eliminé 'size: 200px;' */
+    display: block;
+    line-height: 1; /* Elimina espacio extra alrededor del emoji */
+}
+
+.reference-object {
+    /* Objeto de referencia estático (una regla o mueble pequeño) */
+    font-size: 40px; /* Tamaño del objeto de referencia */
+    color: #888;
+    z-index: 10;
+    transform: translateY(5px); 
+}
+
+@keyframes fadeInSoma {
+    to { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+}
+
+.slide-up-soma {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUpSoma 0.8s ease-out forwards;
+}
+
+@keyframes slideUpSoma {
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+.scale-in-soma {
+    opacity: 0;
+    transform: scale(0.8);
+    animation: scaleInSoma 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards; 
+}
+
+@keyframes scaleInSoma {
+    to { 
+        opacity: 1; 
+        transform: scale(1);
+    }
+}
+
+/* ------------------- ANIMACIÓN DE SALIDA (al guardar) ------------------- */
+.animate-out-zoom {
+    animation: zoomOut 0.7s ease-in forwards;
+}
+
+@keyframes zoomOut {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1.5); 
+        filter: blur(5px);
+    }
 }

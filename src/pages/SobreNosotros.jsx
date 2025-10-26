@@ -22,7 +22,7 @@ return (
     </p>
     <div className="sobre-nosotros-links">
         <Link to="/" className="btn-enlace">Ir a Inicio</Link>
-        <Link to="/catalogo-completo" className="btn-enlace">Explorar Catálogo</Link>
+        <Link to="/catalogo" className="btn-enlace">Explorar Catálogo</Link>
     </div>
     </div>
 </div>
