@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getProductosDestacados } from '../api'; // Importa desde tu API
+import { getProductosDestacados } from '../api'; 
 import './ProductCarousel.css';
 
 const ProductCarousel = () => {

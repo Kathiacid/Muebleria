@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { EstaturaContext } from '../components/EstaturaContext';
-// 🚨 Importamos getProductosRelacionados
 import { getProductoById, getPrecioAjustado, getCategorias, getProductosRelacionados } from "../api"; 
 import axios from 'axios';
 import './ProductoDetalle.css'; 
-
-// ✅ Importar reCAPTCHA
 import ReCAPTCHA from 'react-google-recaptcha';
 
 const ProductoDetalle = () => {
@@ -21,11 +18,7 @@ const ProductoDetalle = () => {
     const [categorias, setCategorias] = useState([]);
     const [cargando, setCargando] = useState(true);
     const [error, setError] = useState(null);
-    
-    // 🚨 NUEVO ESTADO: Para almacenar la lista de productos relacionados
     const [productosRelacionados, setProductosRelacionados] = useState([]); 
-
-    // ... (estados para el formulario, se mantienen iguales)
     const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState({
         nombre: '', email: '', telefono: '', cantidad: 1, ciudad: '', comuna: '', pedido_detallado: ''
@@ -45,8 +38,7 @@ const ProductoDetalle = () => {
             try {
                 setCargando(true);
                 setError(null);
-                
-                // Usamos Promise.all para cargar los datos en paralelo
+
                 const [productoData, categoriasData] = await Promise.all([
                     getProductoById(id),
                     getCategorias()
@@ -59,8 +51,7 @@ const ProductoDetalle = () => {
 
                 setProducto(productoData);
                 setCategorias(categoriasData);
-                
-                // ⭐️ LLAMADA AL ENDPOINT DE PRODUCTOS RELACIONADOS
+
                 const relacionadosData = await getProductosRelacionados(id);
                 setProductosRelacionados(relacionadosData); 
 
@@ -77,7 +68,6 @@ const ProductoDetalle = () => {
         };
 
         fetchData();
-    // Reacciona a cambios en 'id' (al navegar entre productos relacionados) o 'estatura'
     }, [id, estatura]); 
 
     const construirUrlImagen = (imagenPath) => {
@@ -97,7 +87,6 @@ const ProductoDetalle = () => {
         return categoria ? categoria.categorias : 'Sin categoría';
     };
 
-    // ... (funciones del formulario se mantienen)
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -173,7 +162,6 @@ const ProductoDetalle = () => {
         );
     }
 
-    // 🚨 LÓGICA DE TRIPLE PRECIO EN EL FRONTEND
     const basePrice = producto.precio_base;
     const precioFinalDisplay = precioCalculadoInfo ? precioCalculadoInfo.precioFinal : basePrice;
     const precioAntesOferta = precioCalculadoInfo ? precioCalculadoInfo.precioAntesOferta : basePrice;
@@ -216,13 +204,11 @@ const ProductoDetalle = () => {
                 </div>
 
                 <div className="precio-section">
-                    
-                    {/* 1. PRECIO PRINCIPAL (Final y con Descuento) */}
+
                     <div className={`precio-actual ${hayOfertaAplicada ? 'precio-descuento-active' : ''}`}>
                     {formatearPrecio(precioFinalDisplay)}
                     </div>
-                    
-                    {/* 2. PRECIO ANTERIOR (Tachado) / AJUSTE ALTURA */}
+
                     {showPrecioAntes && (
                         <div className="precio-comparacion">
                             <span className="precio-antes-tached">
@@ -232,7 +218,7 @@ const ProductoDetalle = () => {
                         </div>
                     )}
                     
-                    {/* 3. PRECIO BASE (Referencia) - Siempre visible */}
+
                     <div className="precio-comparacion">
                         <span className="precio-base-referencia">
                             Precio Base: {formatearPrecio(basePrice)}
@@ -282,7 +268,7 @@ const ProductoDetalle = () => {
             </div>
             </div>
 
-            {/* ⭐️ NUEVA SECCIÓN: PRODUCTOS RELACIONADOS ⭐️ */}
+
             {productosRelacionados.length > 0 && (
                 <div className="productos-relacionados-section">
                     <h2>Productos que te podrían interesar:</h2>
@@ -292,10 +278,10 @@ const ProductoDetalle = () => {
                                 to={`/producto/${relacionado.id}`} 
                                 key={relacionado.id} 
                                 className="relacionado-card"
-                                // Usamos window.location.href para forzar la recarga del componente y del useEffect
+
                                 onClick={() => { 
                                     navigate(`/producto/${relacionado.id}`); 
-                                    window.location.reload(); // Forzamos recarga para actualizar el useEffect
+                                    window.location.reload();
                                 }} 
                             >
                                 <img src={construirUrlImagen(relacionado.imagen)} alt={relacionado.nombre} />
@@ -310,7 +296,7 @@ const ProductoDetalle = () => {
                     </div>
                 </div>
             )}
-            {/* ⭐️ FIN SECCIÓN DE RELACIONADOS ⭐️ */}
+
 
 
             <div className="volver-section">
@@ -319,7 +305,7 @@ const ProductoDetalle = () => {
             </Link>
             </div>
 
-            {/* ✅ Modal del formulario CON reCAPTCHA */}
+
             {showForm && (
             <div className="modal-overlay">
                 <div className="modal-contenido">
@@ -362,7 +348,6 @@ const ProductoDetalle = () => {
                     placeholder="Ej: Color preferido, detalles específicos, etc."
                     />
 
-                    {/* ✅ reCAPTCHA */}
                     <div className="recaptcha-container">
                     <ReCAPTCHA
                         ref={recaptchaRef}

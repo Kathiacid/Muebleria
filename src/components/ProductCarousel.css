@@ -79,7 +79,7 @@ padding: 15px;
 
 .product-description{
     display: -webkit-box;
-    -webkit-line-clamp: 3; /* Número de líneas */
+    -webkit-line-clamp: 3; 
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -160,7 +160,7 @@ transition: background-color 0.3s ease;
 background-color: #34b1b1;
 }
 
-/* Responsive */
+
 @media (max-width: 900px) {
 .product-card {
 flex: 0 0 calc(50% - 20px);

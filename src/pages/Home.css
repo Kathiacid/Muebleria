@@ -9,125 +9,130 @@
 :root {
     --salmon-pink: #ff6b6b;
 }
+.home-section {
+    /* Por defecto, elimina cualquier margin superior o inferior */
+    margin-top: 0; 
+    margin-bottom: 0;
+    padding: 0; /* Aseguramos que la sección base no tenga padding */
+}
 
 .banner {
     width: 100%;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* ------------------------------------------------------------------ */
-/* GRID RESPONSIVO: MOBILE FIRST (Vista por defecto para pantallas pequeñas) */
-/* ------------------------------------------------------------------ */
-
 .grid {
     background-color: white;
-    /* En móvil, los elementos se apilan automáticamente en una columna */
     display: grid; 
-    gap: 30px; /* Espacio entre la imagen y el texto apilados */
+    gap: 30px; 
     width: 100%;
-    padding: 20px;
     align-items: center;
-    /* Alineación central para una mejor lectura en móvil */
     text-align: center; 
 }
 
-/* Bloques */
 .texto1,
+.texto2,
 .imgs {
     width: 90%;
-    padding: 20px; /* Reducimos el padding en móvil */
+    padding: 20px;
     align-items: center;
     display: flex;
     background: #fff;
     border-radius: 12px;
     flex-direction: column;
-    text-align: center;
+    text-align: left;
+    box-shadow: none; 
+    margin: 0 auto;
+    transition: none; 
 }
 
-/* Títulos y texto en móvil */
-.texto1 h2 {
-    font-size: 3rem; /* Reducimos el tamaño de la fuente para móvil */
+
+.texto1 h2, .texto2 h2 {
+    font-size: 3rem; 
     margin: 10px 0;
 }
 
-.texto1 p {
+.texto1 p, .texto2 p {
     font-style: italic;
     font-family: 'Times New Roman', Times, serif;
-    font-size: 1rem; /* Reducimos el tamaño de la fuente para móvil */
+    font-size: 1rem;
 }
 
-/* Imágenes en móvil */
 .imagen1,
 .imagen2 {
-    /* Aseguramos que la imagen ocupe todo el ancho disponible */
     width: 100%; 
-    max-width: 400px; /* Opcional: limita el ancho máximo */
+    max-width: 400px;
     height: auto;
     border-radius: 10px;
-    transition: transform 0.4s ease, filter 0.4s ease;
+    transition: none; 
     cursor: pointer;
+    display: block; 
+    margin: 0 auto;
 }
 
-
-/* ------------------------------------------------------------------ */
-/* MEDIA QUERY: DESKTOP/TABLET (a partir de 768px) */
-/* ------------------------------------------------------------------ */
 
 @media (min-width: 768px) {
     .grid {
-        /* Define 2 columnas de igual ancho para desktop */
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
         gap: 50px;
-        padding: 60px 40px;
-        /* Alineamos el texto a la izquierda como en el diseño original */
+        padding: 0px 40px 60px 40px;
         text-align: left; 
     }
 
-    /* Aseguramos que los bloques de texto e imagen ocupen su espacio */
-    .texto1 {
-        padding: 40px;
-        /* Alineación vertical al centro */
-        justify-content: center;
-        align-items: flex-start; /* Alinea contenido del texto a la izquierda */
-    }
-    
-    .img1 {
-        padding: 0; /* Quitamos padding excesivo si la imagen ya tiene margen */
-        justify-content: center;
-    }
-
-    /* Títulos y texto en desktop */
-    .texto1 h2 {
-        font-size: 5rem; /* Volvemos al tamaño original grande */
-    }
-
-    .texto1 p {
-        font-size: 2rem; /* Volvemos al tamaño original */
-    }
-
-    /* Imágenes en desktop */
-    .imagen1,
-    .imagen2 {
-        /* La imagen ocupará el 100% de su columna (1fr) */
+    .texto1,
+    .texto2 { 
         width: 100%; 
-        max-width: none; /* Quitamos el límite para que se estire */
+        padding: 40px;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .texto1 {
+        align-items: flex-start;
+        text-align: left; 
+    }
+
+    .texto2 { 
+        align-items: flex-end;
+        text-align: right; 
+    }
+
+    .texto1 h2, .texto2 h2 {
+        font-size: 5rem;
+    }
+
+    .texto1 p, .texto2 p {
+        font-size: 2rem;
+    }
+
+    .img1,
+    .img2 {
+        padding: 0;
+        justify-content: center;
+        width: 100%; 
+        max-width: none;
     }
 }
 
-
-/* Estilos que no dependen del responsive */
-.texto1:hover,
-.texto2:hover,
-.img1:hover,
-.img2:hover {
-    transform: translateY(-5px);
+.mi-boton {
+    position: relative;
+    color: #333;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 10px 0;
+    transition: color 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    overflow: hidden;
+    background: none;
+    border: none;
+    margin-top: 20px;
 }
 
-.imagen1:hover,
-.imagen2:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
+.mi-boton:hover {
+    color: var(--salmon-pink);
 }
 
 .mi-boton {
@@ -162,24 +167,26 @@
     display: block !important;
 }
 
-/* Al hacer hover: aparece desde la derecha */
 .mi-boton:hover .underline-right {
     width: 100%;
     right: auto;
     left: 0;
 }
 
-.carousel{
+.carousel {
     justify-items: center;
+    margin-bottom:0px;
+    
+    
+
 }
 .carousel h2{
     font-size: 2rem;
 }
 
 .benefits-section {
-    background-color: #ffffff; /* Fondo blanco */
+    background-color: #ffffff;
     padding: 60px 20px;
-    
 }
 .benefits-section h2{
     text-align: center;
@@ -188,31 +195,27 @@
 
 .benefits-grid {
     display: grid;
-    /* 🚨 Asegura que haya 4 columnas en desktop */
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
     gap: 30px;
     text-align: center;
 }
 
 .benefit-card {
-    /* 🚨 Tarjeta limpia y sutilmente elevada */
     padding: 25px 20px;
     border-radius: 12px;
-    border: 1px solid #eeeeee; /* Borde muy sutil */
+    border: 1px solid #eeeeee;
     transition: all 0.3s ease;
     background-color: #fff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .benefit-card:hover {
-    /* Efecto Hover SOMA: Resaltado rojo */
     border-color: #FF6B6B;
     box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
     transform: translateY(-3px);
 }
 
 .benefit-card i {
-    /* Iconos (Font Awesome) en Rojo SOMA */
     font-size: 2.8em;
     color: #FF6B6B; 
     margin-bottom: 15px;
@@ -231,15 +234,12 @@
     font-style: normal;
 }
 
-/* ------------------- SECCIÓN 5: CTA FINAL (CUSTOMIZACIÓN) ------------------- */
-
 .final-cta-section {
-    /* Fondo limpio con borde de llamada de atención */
     background-color: #ffffff;
     border-radius: 15px;
     padding: 60px 40px;
     text-align: center;
-    border: 3px dashed #FF6B6B; /* Borde rojo que llama la atención */
+    border: 3px dashed #FF6B6B;
     margin-top: 50px;
     box-shadow: 0 4px 20px rgba(255, 107, 107, 0.2);
     margin-bottom: 20px;
@@ -258,7 +258,6 @@
     margin-bottom: 30px;
 }
 
-/* Botón grande para la CTA final */
 .cta-button-large {
     display: inline-block;
     background-color: #FF6B6B;
@@ -269,17 +268,16 @@
     font-weight: 700;
     text-decoration: none;
     transition: background-color 0.3s, transform 0.3s;
-    box-shadow: 0 6px 15px rgba(255, 107, 107, 0.5); /* Sombra roja sutil */
+    box-shadow: 0 6px 15px rgba(255, 107, 107, 0.5);
     letter-spacing: 0.5px;
 }
 
 .cta-button-large:hover {
-    background-color: #c82323; /* Rojo más oscuro al hacer hover */
+    background-color: #c82323;
     transform: translateY(-3px);
     box-shadow: 0 8px 20px rgba(255, 107, 107, 0.7);
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .cta-content-box h2 {
         font-size: 2em;
@@ -290,3 +288,47 @@
         padding: 15px 20px;
     }
 }
+
+
+@keyframes fadeInFromLeft {
+    0% { opacity: 0; transform: translateX(-50px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInFromRight {
+    0% { opacity: 0; transform: translateX(50px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.benefits-section .benefit-card,
+.final-cta-section .cta-content-box,
+.carousel .carousel-content-wrapper { 
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0s 0.5s; 
+}
+
+.animate-in {
+    opacity: 1 !important; 
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    transition: none;
+}
+
+
+.benefits-section .benefit-card.animate-in,
+.carousel .carousel-content-wrapper.animate-in, 
+.final-cta-section .cta-content-box.animate-in {
+    animation-name: fadeInUp;
+    animation-duration: 0.9s;
+}
+
+.benefits-grid .benefit-card:nth-child(1).animate-in { animation-delay: 0.1s; }
+.benefits-grid .benefit-card:nth-child(2).animate-in { animation-delay: 0.3s; }
+.benefits-grid .benefit-card:nth-child(3).animate-in { animation-delay: 0.5s; }
+.benefits-grid .benefit-card:nth-child(4).animate-in { animation-delay: 0.7s; }

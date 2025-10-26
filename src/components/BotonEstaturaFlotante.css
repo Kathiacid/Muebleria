@@ -40,11 +40,6 @@ transition: transform 450ms;
     transform: translateY(-2px) rotateX(5deg);
 }
 
-/*.floating-estatura-btn img {
-width: 32px;
-height: 32px;
-}*/
-
 .floating-estatura-btn .tooltip {
 visibility: hidden;
 opacity: 0;

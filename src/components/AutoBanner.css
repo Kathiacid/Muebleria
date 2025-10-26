@@ -1,4 +1,4 @@
-/* Contenedor principal para centrar verticalmente */
+
 .banner-main-container {
     display: flex;
     justify-content: center;
@@ -42,7 +42,7 @@
     max-width: 600px;
 }
 
-/* Botones de navegación transparentes */
+
 .nav-button {
     position: absolute;
     top: 50%;
@@ -80,7 +80,7 @@
 @media (max-width: 768px) {
     .auto-banner {
         height: 300px;
-        width: 90%; /* Un poco más ancho en móviles */
+        width: 90%; 
     }
 
     .banner-content h2 {
@@ -101,7 +101,7 @@
 @media (max-width: 480px) {
     .auto-banner {
         height: 250px;
-        width: 95%; /* Más ancho en móviles pequeños */
+        width: 95%; 
     }
 
     .banner-content {

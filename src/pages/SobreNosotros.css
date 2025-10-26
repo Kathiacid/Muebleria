@@ -1,37 +1,30 @@
-/* ------------------- ESTILOS BASE Y CONTENEDOR ------------------- */
+
 .sobre-nosotros-container {
-    /* Fondo Blanco/Gris Claro de la estética SOMA */
     background-color: #fcfcfc;
     min-height: 100vh;
     padding: 60px 20px;
     display: flex;
     justify-content: center;
-    align-items: flex-start; /* Alinea al inicio, no al centro vertical */
+    align-items: flex-start; 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #333;
 }
 
-/* ------------------- TARJETA PRINCIPAL (CARD) ------------------- */
 .sobre-nosotros-card {
-    /* Estilo de Tarjeta Flotante (Neumorfismo Suave) */
     background: #ffffff;
     padding: 50px;
     border-radius: 12px;
     max-width: 800px;
     width: 100%;
     text-align: center;
-    
-    /* Sombra elegante con acento SOMA */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08), 0 0 15px rgba(255, 107, 107, 0.1);
 }
 
-/* ------------------- TÍTULOS Y TEXTO ------------------- */
 .sobre-nosotros-card h1 {
     font-size: 2.8em;
     font-weight: 700;
     color: #333;
     margin-bottom: 25px;
-    /* Subrayado sutil en Rojo SOMA */
     border-bottom: 3px solid #FF6B6B;
     display: inline-block;
     padding-bottom: 10px;
@@ -42,17 +35,16 @@
     line-height: 1.8;
     margin-bottom: 20px;
     color: #555;
-    text-align: left; /* Alineación para facilitar la lectura */
+    text-align: left;
 }
 
-/* Énfasis en la Personalización (Opcional: Si quieres resaltar una palabra clave) */
+
 .sobre-nosotros-card p strong {
     color: #FF6B6B;
     font-weight: 700;
 }
 
 
-/* ------------------- ENLACES Y BOTONES ------------------- */
 .sobre-nosotros-links {
     margin-top: 40px;
     display: flex;
@@ -61,7 +53,6 @@
 }
 
 .btn-enlace {
-    /* Estilo de Botón Principal (Rojo SOMA) */
     display: inline-block;
     background-color: #FF6B6B;
     color: white;
@@ -81,17 +72,6 @@
     box-shadow: 0 4px 10px rgba(255, 107, 107, 0.6);
 }
 
-/* Estilo para el botón secundario (Explorar Catálogo) si lo quieres diferente */
-/*
-.sobre-nosotros-links .btn-enlace:last-child {
-    background-color: #5A4E6C; 
-}
-.sobre-nosotros-links .btn-enlace:last-child:hover {
-    background-color: #796A8B; 
-}
-*/
-
-/* ------------------- RESPONSIVE ------------------- */
 @media (max-width: 600px) {
     .sobre-nosotros-container {
         padding: 30px 15px;

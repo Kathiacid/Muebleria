@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom' // Importa el componente Link
+import { Link } from 'react-router-dom' 
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -18,8 +18,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
-      
-      {/* Nuevo enlace a Catálogo */}
+
       <p>
         <Link to="/catalogo">Ir a Catálogo</Link>
       </p>

@@ -145,7 +145,7 @@
 }
 
 .producto-card {
-    /* 🚨 CRÍTICO: Añadir position: relative y overflow: hidden */
+
     position: relative;
     overflow: hidden; 
     
@@ -238,15 +238,13 @@
     font-size: 1.1rem;
 }
 
-/* ------------------- ESTILOS DE ETIQUETAS Y PRECIOS ------------------- */
 
-/* 🚨 1. BADGE DE OFERTA EN LA ESQUINA (Posicionamiento absoluto) */
 .oferta-badge {
     position: absolute;
     top: 15px;
     right: 0;
     
-    background-color: #FF6B6B; /* Rojo SOMA */
+    background-color: #FF6B6B; 
     color: white;
     font-size: 0.85em;
     font-weight: 700;
@@ -260,9 +258,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-/* 🚨 2. ESTILOS DE PRECIO DINÁMICOS */
 
-/* Precio tachado (Precio antes de la oferta/ajuste) */
 .precio-base-tachado {
     color: #999;
     text-decoration: line-through;
@@ -272,21 +268,19 @@
     margin-bottom: 5px;
 }
 
-/* Precio Principal cuando hay oferta */
+
 .producto-precio.precio-oferta {
-    color: #FF6B6B; /* Rojo SOMA para resaltar */
+    color: #FF6B6B; 
     font-weight: 700;
     font-size: 1.1em;
 }
 
-/* Precio Principal cuando hay ajuste al alza (Opcional: usar color diferente o negrita) */
 .producto-precio.precio-alza {
     color: #000000;
     font-weight: 900;
     font-size: 1.1em;
 }
 
-/* Etiqueta pequeña "OFERTA" dentro del texto de precio */
 .precio-tag-oferta {
     background-color: #FF6B6B;
     color: white;
@@ -296,9 +290,8 @@
     margin-right: 5px;
 }
 
-/* Etiqueta pequeña "AJUSTE" dentro del texto de precio */
 .precio-tag-alza {
-    background-color: #333; /* Gris oscuro para el ajuste */
+    background-color: #333; 
     color: white;
     font-size: 0.7em;
     padding: 2px 5px;
@@ -306,7 +299,6 @@
     margin-right: 5px;
 }
 
-/* ------------------- Media Queries (Se mantienen) ------------------- */
 @media (max-width: 992px) {
     .catalogo-content {
         flex-direction: column;

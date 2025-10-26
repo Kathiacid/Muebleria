@@ -41,7 +41,7 @@ const AutoBanner = ({ banners, autoPlayInterval = 5000 }) => {
   }, [autoPlayInterval, banners.length]);
 
   return (
-    <div className="banner-main-container"> {/* ← Nuevo contenedor */}
+    <div className="banner-main-container"> 
       <div className="auto-banner">
         <div
           className="banner-container"

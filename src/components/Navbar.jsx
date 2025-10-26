@@ -19,7 +19,7 @@ export default function Navbar() {
     const manejarSubmit = (e) => {
         e.preventDefault();
         if (busqueda.trim() !== "") {
-            // Verifica estatura antes de buscar
+            
             if (!estatura) {
                 navigate("/estatura");
             } else {
@@ -31,13 +31,12 @@ export default function Navbar() {
 
     const navegarACatalogo = (categoria) => {
         setIsCatalogOpen(false);
-        // 1. VERIFICACIÓN DE ESTATURA
         if (!estatura) {
             navigate("/estatura");
-            return; // Detiene la función y redirige si no hay estatura
+            return;
         }
 
-        // 2. NAVEGACIÓN (Solo si la estatura existe)
+
         if (categoria === "todos") {
             navigate("/catalogo");
         } else {
@@ -45,7 +44,7 @@ export default function Navbar() {
         }
     };
 
-    // Cerrar dropdown al hacer click fuera
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (catalogRef.current && !catalogRef.current.contains(event.target)) {
@@ -59,7 +58,7 @@ export default function Navbar() {
         };
     }, []);
 
-    // Determinar si un item está activo
+
     const isItemActive = (path) => {
         if (path === "/catalogo") {
             return location.pathname.includes("catalogo");
@@ -67,13 +66,11 @@ export default function Navbar() {
         return location.pathname === path;
     };
     
-    // Función para cambiar la estatura, si se hace clic en el indicador
+
     const handleEstaturaClick = () => {
         if (estatura === null) {
             navigate("/estatura");
         } else {
-            // Si quieres permitir cambiarla, navega a una página de configuración o a estatura
-            // Por ahora, solo navegaremos si no está puesta.
         }
     }
 
@@ -82,12 +79,10 @@ export default function Navbar() {
         <header className="header">
             <div className="header-main">
                 <div className="container">
-                    {/* Logo */}
                     <Link to="/" className="header-logo">
                         <h2>SOMA</h2>
                     </Link>
 
-                    {/* Navegación Desktop */}
                     <nav className="desktop-navigation-menu">
                         <ul className="desktop-menu-category-list" ref={navRef}>
                             <li className={`menu-category ${isItemActive("/") ? "active" : ""}`}>
@@ -103,7 +98,7 @@ export default function Navbar() {
                                 onMouseEnter={() => setIsCatalogOpen(true)}
                                 onMouseLeave={() => setIsCatalogOpen(false)}
                             >
-                                {/* Clic en el Título Principal del Catálogo: USA ONCLICK */}
+                                
                                 <span 
                                     className="menu-title catalog-trigger"
                                     onClick={() => navegarACatalogo("todos")}
@@ -112,10 +107,10 @@ export default function Navbar() {
                                     <span className="underline-right"></span>
                                 </span>
                                 
-                                {/* Dropdown Panel */}
+                                
                                 <div className={`dropdown-panel ${isCatalogOpen ? "active" : ""}`}>
                                     
-                                    {/* COLUMNA 1 */}
+                                    
                                     <div className="dropdown-panel-list">
                                         <div className="menu-title">
                                             <span >
@@ -123,7 +118,7 @@ export default function Navbar() {
                                             </span>
                                         </div>
 
-                                        {/* Ítems: Cambiados a <span> con onClick */}
+                                        
                                         <div className="panel-list-item">
                                             <span onClick={() => navegarACatalogo("5")}>
                                                 Cocina
@@ -146,7 +141,7 @@ export default function Navbar() {
                                         </div>
                                     </div>
 
-                                    {/* COLUMNA 2 */}
+                                    
                                     <div className="dropdown-panel-list">
                                         <div className="menu-title">
                                             <span >
@@ -166,7 +161,7 @@ export default function Navbar() {
                                             </span>
                                         </div>
                                     </div>
-                                    {/* COLUMNA 3 */}
+                                    
                                     <div className="dropdown-panel-list">
                                         <div className="menu-title">
                                             <span>Te podría interesar</span>
@@ -189,7 +184,7 @@ export default function Navbar() {
                         </ul>
                     </nav>
 
-                    {/* Buscador */}
+                    
                     <div className="header-search-container">
                         <form onSubmit={manejarSubmit}>
                             <input 
@@ -205,7 +200,7 @@ export default function Navbar() {
                         </form>
                     </div>
 
-                    {/* Acciones de usuario / Indicador de Estatura */}
+                    
                     <div className="altura-navbar" onClick={handleEstaturaClick}>
                         <i className="fas fa-ruler-vertical"></i>
                         <strong className="estatura-resaltada">

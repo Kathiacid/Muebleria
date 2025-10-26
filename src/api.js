@@ -9,7 +9,6 @@ const BASE_URL = "http://127.0.0.1:8000/api/";
 export const getCategorias = async () => {
     try {
         const response = await axios.get(`${BASE_URL}categorias/`);
-        // Asumiendo que 'categorias_display' se utiliza para el nombre en el frontend
         return response.data.map(cat => ({
             id: cat.id,
             categorias: cat.categorias_display, 
@@ -21,7 +20,7 @@ export const getCategorias = async () => {
     }
 };
 
-// 👉 Productos (Todos en stock)
+
 export const getProductos = async () => {
     try {
         const response = await axios.get(`${BASE_URL}productos/`);
@@ -43,13 +42,9 @@ export const getProductos = async () => {
     }
 };
 
-// 🚨 NUEVA FUNCIÓN: Obtener productos con ofertas activas
 export const getProductosEnOferta = async () => {
     try {
-        // Llama al nuevo endpoint creado en Django views.py
         const response = await axios.get(`${BASE_URL}productos/productos_en_oferta/`);
-        
-        // Mapeamos los campos igual que getProductos para consistencia en el frontend
         return response.data.map(prod => ({
             id: prod.id,
             imagen: prod.imagen,
@@ -69,7 +64,7 @@ export const getProductosEnOferta = async () => {
 };
 
 
-// 👉 Obtener un producto por ID
+
 export const getProductoById = async (id) => {
     try {
         const response = await axios.get(`${BASE_URL}productos/${id}/`);
@@ -80,7 +75,6 @@ export const getProductoById = async (id) => {
     }
 };
 
-// 👉 Solicitudes (POST)
 export const enviarSolicitud = async (solicitudData) => {
     try {
         const response = await axios.post(`${BASE_URL}solicitudes/`, solicitudData);
@@ -91,15 +85,12 @@ export const enviarSolicitud = async (solicitudData) => {
     }
 };
 
-// 🚨 FUNCIÓN TRIPLE PRECIO (Para detalle/catálogo individual)
 export const getPrecioAjustado = async (productoId, altura) => {
     try {
         const response = await axios.get(
             `${BASE_URL}productos/${productoId}/calcular_precio/`,
             { params: { altura } }
         );
-        
-        // Mapeamos los campos que esperamos del backend (obtenidos de obtener_precio_final)
         return {
             precioFinal: response.data.precio_final,
             precioBase: response.data.precio_base,
@@ -133,10 +124,10 @@ export const getProductosDestacados = async () => {
 
 export const getProductosRelacionados = async (productoId) => {
     try {
-        // Llama al nuevo endpoint
+
         const response = await axios.get(`${BASE_URL}productos/${productoId}/productos_relacionados/`);
         
-        // Mapeamos los datos para consistencia en el frontend
+
         return response.data.map(prod => ({
             id: prod.id,
             imagen: prod.imagen,
