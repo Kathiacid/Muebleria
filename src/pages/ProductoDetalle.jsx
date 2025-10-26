@@ -20,6 +20,8 @@ const ProductoDetalle = () => {
     const [error, setError] = useState(null);
     const [productosRelacionados, setProductosRelacionados] = useState([]); 
     const [showForm, setShowForm] = useState(false);
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
+
     const [formData, setFormData] = useState({
         nombre: '', email: '', telefono: '', cantidad: 1, ciudad: '', comuna: '', pedido_detallado: ''
     });
@@ -104,6 +106,12 @@ const ProductoDetalle = () => {
         setShowForm(false);
         resetRecaptcha();
     };
+    
+
+    const closeSuccessModal = () => {
+        setShowSuccessModal(false);
+    };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -127,10 +135,12 @@ const ProductoDetalle = () => {
                 recaptcha_token: recaptchaToken, 
             });
 
-            setMensaje('✅ Pedido enviado con éxito');
+
             setFormData({ nombre: '', email: '', telefono: '', cantidad: 1, ciudad: '', comuna: '', pedido_detallado: '' });
             resetRecaptcha();
-            setShowForm(false);
+            setShowForm(false); 
+            setShowSuccessModal(true); 
+
         } catch (error) {
             console.error(error.response?.data || error.message);
             setMensaje('❌ Error al enviar el pedido');
@@ -369,7 +379,24 @@ const ProductoDetalle = () => {
                 </div>
             </div>
             )}
+            
 
+            {showSuccessModal && (
+                <div className="modal-overlay">
+                    <div className="modal-contenido" style={{ maxWidth: '400px' }}>
+                        <h3 className="modal-titulo" style={{ color: '#34b1b1', marginBottom: '15px' }}>
+                            🎉 Pedido Enviado con Éxito
+                        </h3>
+                        <p style={{ textAlign: 'center', marginBottom: '30px', fontSize: '1.1rem' }}>
+                            Tu solicitud ha sido recibida. Te contactaremos pronto para confirmar los detalles.
+                        </p>
+                        <button className="btn-enviar" onClick={closeSuccessModal} style={{ width: '100%' }}>
+                            Entendido
+                        </button>
+                    </div>
+                </div>
+            )}
+            
             {mensaje && <p className="mensaje">{mensaje}</p>}
         </div>
     );

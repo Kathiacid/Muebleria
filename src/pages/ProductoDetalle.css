@@ -250,6 +250,14 @@
     max-width: 500px;
     position: relative;
     box-shadow: 0 5px 25px rgba(255, 107, 107, 0.4);
+    overflow-y: scroll; 
+    max-height: 90vh;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+}
+
+.modal-contenido::-webkit-scrollbar {
+    display: none;
 }
 
 .modal-cerrar {

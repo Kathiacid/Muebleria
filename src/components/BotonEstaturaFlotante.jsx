@@ -12,9 +12,9 @@ if (!estatura) return null;
 return (
 <div
     className="floating-estatura-btn"
-    onClick={() => navigate("/estatura")}>
-    <img
-    />
+    onClick={() => navigate("/estatura")}
+>
+    <img src='/contorno.png' alt="Contorno de estatura" />
     <span className="tooltip">Cambiar estatura</span>
 </div>
 );
